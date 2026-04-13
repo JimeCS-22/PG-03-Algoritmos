@@ -1,4 +1,4 @@
-package ucr.algoritmos.pg03algoritmos;
+package ucr.algoritmos.pg03algoritmos.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
