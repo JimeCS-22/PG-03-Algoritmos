@@ -193,9 +193,9 @@ public class Search {
         //En otro caso debemos de dividir el arreglo en dos mitades
             int mid = (low + high) / 2;
             steps.add("Rango[ " + low + " , " + high + "] -> mid=" + mid);
-            steps.add("leftResult: Rango [ " + low + " , " + high + "]");
+            steps.add("leftResult: findMinMax arr: " + low + " , " + high + "--> arr[low]=" + arr[low] + " arr[mid]=" + arr[mid]);
             MinMax left = findMinMax(arr, low, mid);//La mitad a la izquierda
-            steps.add("rightResult: Rango [ " + mid+1 + " , " + high + "]");
+            steps.add("rightResult: findMinMax  (" + mid+1 + " , " + high + ") --> arr[mid + 1]=" + arr[mid+1] + "array (high) " + arr[high] );
             MinMax right = findMinMax(arr, mid + 1, high);//La mitad a la derecha
 
             int min = Math.min(left.min, right.min);
