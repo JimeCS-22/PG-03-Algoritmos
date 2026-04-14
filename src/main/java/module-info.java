@@ -7,4 +7,6 @@ module ucr.algoritmos.pg03algoritmos {
     exports ucr.algoritmos.pg03algoritmos;
     exports ucr.algoritmos.pg03algoritmos.controller;
     opens ucr.algoritmos.pg03algoritmos.controller to javafx.fxml;
+    exports util;
+    opens util to javafx.fxml;
 }
