@@ -181,19 +181,27 @@ public class Search {
     public static MinMax findMinMax(int[] arr, int low, int high) {
         //Case base: solo hay un elemento
         if (low >= high) {
+            steps.add("Caso base 1 elemento: min=" + arr[low] + " max=" + arr[high]);
             return new MinMax(arr[low], arr[low]);
         }
         //Case base: hay dos elementos
         if (high == low + 1) {
+            steps.add("Caso base 2 elementos: min=" + Math.min(arr[low], arr[high]) +
+                    " max=" + Math.max(arr[high], arr[low]));
             return new MinMax(Math.min(arr[high], arr[low]), Math.max(arr[low], arr[high]));
         }
         //En otro caso debemos de dividir el arreglo en dos mitades
             int mid = (low + high) / 2;
+            steps.add("Rango[ " + low + " , " + high + "] -> mid=" + mid);
+            steps.add("leftResult: Rango [ " + low + " , " + high + "]");
             MinMax left = findMinMax(arr, low, mid);//La mitad a la izquierda
+            steps.add("rightResult: Rango [ " + mid+1 + " , " + high + "]");
             MinMax right = findMinMax(arr, mid + 1, high);//La mitad a la derecha
 
             int min = Math.min(left.min, right.min);
+            steps.add("Valor de la variable min == " + min);
             int max = Math.max(left.max, right.max);
+            steps.add("Valor de la variable max == " + max);
 
             return new MinMax(min, max);
 
