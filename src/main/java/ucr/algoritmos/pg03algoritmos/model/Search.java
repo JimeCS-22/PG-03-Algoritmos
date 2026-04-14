@@ -180,31 +180,34 @@ public class Search {
 
     public static MinMax findMinMax(int[] arr, int low, int high) {
         //Case base: solo hay un elemento
-        if (low >= high) {
-            steps.add("Caso base 1 elemento: min=" + arr[low] + " max=" + arr[high]);
+        if(low==high){
+            steps.add("Caso base 1 elemento: min=="+arr[low]+" max=="+arr[high]);
             return new MinMax(arr[low], arr[low]);
         }
-        //Case base: hay dos elementos
-        if (high == low + 1) {
-            steps.add("Caso base 2 elementos: min=" + Math.min(arr[low], arr[high]) +
-                    " max=" + Math.max(arr[high], arr[low]));
-            return new MinMax(Math.min(arr[high], arr[low]), Math.max(arr[low], arr[high]));
+        //Caso base: dos elementos
+        if(high == low + 1){
+            steps.add("Caso base 2 elementos: min=="+Math.min(arr[low], arr[high])+
+                    ", max=="+Math.max(arr[low], arr[high]));
+            return new MinMax(Math.min(arr[low], arr[high]), Math.max(arr[low], arr[high]));
         }
-        //En otro caso debemos de dividir el arreglo en dos mitades
-            int mid = (low + high) / 2;
-            steps.add("Rango[ " + low + " , " + high + "] -> mid=" + mid);
-            steps.add("leftResult: findMinMax arr: " + low + " , " + high + "--> arr[low]=" + arr[low] + " arr[mid]=" + arr[mid]);
-            MinMax left = findMinMax(arr, low, mid);//La mitad a la izquierda
-            steps.add("rightResult: findMinMax  (" + mid+1 + " , " + high + ") --> arr[mid + 1]=" + arr[mid+1] + "array (high) " + arr[high] );
-            MinMax right = findMinMax(arr, mid + 1, high);//La mitad a la derecha
 
-            int min = Math.min(left.min, right.min);
-            steps.add("Valor de la variable min == " + min);
-            int max = Math.max(left.max, right.max);
-            steps.add("Valor de la variable max == " + max);
+        //En otro caso, debemos dividir el arreglo en dos mitades
+        int mid = (low+high)/2;
+        steps.add("Rango ["+low+","+high+"] -->mid="+mid+", arr[mid]=="+arr[mid]);
+        steps.add("leftResult: findMinMax(arr,"+low+","+mid+") -->low=="+low
+                +", arr[low]=="+arr[low]+", high=="+mid+", arr[mid]=="+arr[mid]);
+        MinMax leftResult = findMinMax(arr, low, mid); //la mitad a la izq
+        steps.add("rightResult: findMinMax(arr,"+mid+1+","+high+") -->low=="+mid+1
+                +", arr[mid+1]=="+arr[mid+1]+", high=="+high+", arr[high]=="+arr[high]);
+        MinMax rightResult = findMinMax(arr, mid+1, high); //la mitad a la der
 
-            return new MinMax(min, max);
+        //Podemos combinar los resultados
+        int min = Math.min(leftResult.getMin(), rightResult.getMin());
+        steps.add("valor de la variable min =="+min);
+        int max = Math.max(leftResult.getMax(), rightResult.getMax());
+        steps.add("valor de la variable max =="+max);
 
+        return new MinMax(min, max);
     }
 
 
