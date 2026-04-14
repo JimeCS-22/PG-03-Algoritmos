@@ -11,10 +11,11 @@ public class Search {
     /**
      * int value = 10
      * int pos =
-    * binarySearch(sortedArray, value,0,sortedArray.length-1)
-    * */
+     * binarySearch(sortedArray, value,0,sortedArray.length-1)
+     *
+     */
 
-    public static int binarySearch(int [] sortedArray, int value, int low, int high){
+    public static int binarySearch(int[] sortedArray, int value, int low, int high) {
 
         //Caso base
         if (low > high) {
@@ -22,12 +23,12 @@ public class Search {
             return -1;
         }
 
-        int mid = (low+high)/2;
+        int mid = (low + high) / 2;
 
         steps.add("Rango [" + low + " , " + high + " ] ----> mitad  = " + mid + " (sortedArray[mid] = " +
                 sortedArray[mid] + " )");
 
-        if (value == sortedArray[mid]){
+        if (value == sortedArray[mid]) {
             steps.add("Valor encontrado en el indice " + mid);
             return mid;
         } else if (value < sortedArray[mid]) {
@@ -40,7 +41,7 @@ public class Search {
      * Metodo iteractivo de la busqueda binaria
      **/
 
-    public static int binarySearchIterative(int [] sortedArray, int value){
+    public static int binarySearchIterative(int[] sortedArray, int value) {
 
         int low = 0;
         int high = sortedArray.length - 1;
@@ -131,7 +132,7 @@ public class Search {
             }
 
             // Fórmula de interpolación
-            int pos = low + (int) (((long)(high - low) * (value - sortedArray[low]))
+            int pos = low + (int) (((long) (high - low) * (value - sortedArray[low]))
                     / (sortedArray[high] - sortedArray[low]));
 
             steps.add("Rango [" + low + "," + high + "] -> pos=" + pos +
@@ -158,19 +159,45 @@ public class Search {
 
 
     //Practica
-    public static void findMinMax(int[] sortedArray) {
-        int min = sortedArray[0];
-        int max = sortedArray[0];
-        for (int i = 1; i < sortedArray.length; i++) {
-            if (sortedArray[i] > max) {
-                max = sortedArray[i];
-            }
+    public static class MinMax {
+        private int min;
+        private int max;
+
+        public MinMax(int min, int max) {
+            this.min = min;
+            this.max = max;
         }
-        for (int i = 1; i < sortedArray.length; i++) {
-            if (sortedArray[i] < min) {
-                min = sortedArray[i];
-            }
+
+        public int getMin() {
+            return min;
         }
+
+        public int getMax() {
+            return max;
+        }
+
     }
+
+    public static MinMax findMinMax(int[] arr, int low, int high) {
+        //Case base: solo hay un elemento
+        if (low >= high) {
+            return new MinMax(arr[low], arr[low]);
+        }
+        //Case base: hay dos elementos
+        if (high == low + 1) {
+            return new MinMax(Math.min(arr[high], arr[low]), Math.max(arr[low], arr[high]));
+        }
+        //En otro caso debemos de dividir el arreglo en dos mitades
+            int mid = (low + high) / 2;
+            MinMax left = findMinMax(arr, low, mid);//La mitad a la izquierda
+            MinMax right = findMinMax(arr, mid + 1, high);//La mitad a la derecha
+
+            int min = Math.min(left.min, right.min);
+            int max = Math.max(left.max, right.max);
+
+            return new MinMax(min, max);
+
+    }
+
 
 }

@@ -13,6 +13,9 @@ class SearchTest {
     void minMaxTest() {
         int[] arr = new Random().ints(100, 1, 100).toArray();
         System.out.println("\n" + Arrays.toString(arr));
+        Search.MinMax minMax = Search.findMinMax(arr, 0, arr.length - 1);
+        System.out.println("Array min item: " + minMax.getMin()
+        + "\nArray max item: " + minMax.getMax()) ;
     }
 
 }
