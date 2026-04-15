@@ -13,6 +13,7 @@ class SearchTest {
 
     @Test
     void minMaxTest() {
+        Search.steps.clear();
         int[] arr = new Random().ints(50, 10, 70).toArray();
         System.out.println("\n" + Arrays.toString(arr));
         Search.MinMax minMax = Search.findMinMax(arr, 0, arr.length - 1);
@@ -49,7 +50,7 @@ class SearchTest {
             case "iterative model.Search" -> Search.binarySearchIterative(arr, value);
             default -> 0;
         };
-        return index!=0 ?"Array value ["+value+"] index=="+index
+        return index >= 0 ?"Array value ["+value+"] index=="+index
                 :"Array value ["+value+"] not found";
     }
 

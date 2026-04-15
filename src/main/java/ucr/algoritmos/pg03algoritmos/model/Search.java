@@ -197,8 +197,8 @@ public class Search {
         steps.add("leftResult: findMinMax(arr,"+low+","+mid+") -->low=="+low
                 +", arr[low]=="+arr[low]+", high=="+mid+", arr[mid]=="+arr[mid]);
         MinMax leftResult = findMinMax(arr, low, mid); //la mitad a la izq
-        steps.add("rightResult: findMinMax(arr,"+mid+1+","+high+") -->low=="+mid+1
-                +", arr[mid+1]=="+arr[mid+1]+", high=="+high+", arr[high]=="+arr[high]);
+        steps.add("rightResult: findMinMax(arr," + (mid+1) + "," + high + ") -->low==" + (mid+1)
+                + ", arr[mid+1]==" + arr[mid+1] + ", high==" + high + ", arr[high]==" + arr[high]);
         MinMax rightResult = findMinMax(arr, mid+1, high); //la mitad a la der
 
         //Podemos combinar los resultados
