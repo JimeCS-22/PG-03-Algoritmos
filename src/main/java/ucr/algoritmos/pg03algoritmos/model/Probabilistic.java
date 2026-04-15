@@ -15,24 +15,21 @@ public class Probabilistic {
         int[] result = new int[2];
         int count = 0;
         //Random random = new Random();
-        boolean found = false;
 
-        while (count < attempts) {
+        while (true) {
             int index = new Random().nextInt(arr.length-1);
             count++;
-            if (arr[index] == value) {//Si el indice del array es igual a la variable
-                result[0] = index;
-                result[1] = count;
-                found = true;
+            result[0] = index;
+            result[1] = ++count;
+
+            if (arr[index] == value) return result; //Si el indice del array es igual a la variable
+
+            if (count>= attempts){
+                result[0] = -1;
+                return result;
             }
         }
 
-        if (!found) {
-            result[0] = -1; // No encontrado
-            result[1] = count;
-        }
-
-        return result;
     }
 }
 

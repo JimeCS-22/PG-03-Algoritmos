@@ -18,9 +18,12 @@ class ProbabilistcTest {
 
         for (int i = 0; i < 20; i++) {
             int value = new Random().nextInt(100);
-            int[] result = p.randomSearch(arr, value, 50);
+            int attempts = new  Random().nextInt(10,50);
+            int[] result = p.randomSearch(arr, value, attempts);
+
             System.out.println(
-                    result[0] != -1 ? "Item [" + value + "] found in index: " + result[0] + ". Attempts: " + result[1]
+                    result[0] != -1 ? "Item [" + value + "] found in index: " + result[0] + ". Attempts: " + result[1]+
+                            "Max attempts allowed: " + attempts
                             : "Item[" + value + "] not found. Max attempts: " + result[1]
             );
         }
