@@ -73,12 +73,12 @@
                                                 <HBox prefHeight="100.0" prefWidth="114.0" />
                                             </children>
                                         </HBox>
-                              <TableView prefHeight="256.0" prefWidth="549.0">
-                                <columns>
-                                  <TableColumn prefWidth="75.0" text="C1" />
-                                  <TableColumn prefWidth="75.0" text="C2" />
-                                </columns>
-                              </TableView>                                    </children>
+                                        <TableView fx:id="tableResults" prefHeight="256.0" prefWidth="549.0">
+                                            <columns>
+                                                <TableColumn fx:id="colNumber" text="Número" prefWidth="270"/>
+                                                <TableColumn fx:id="colResult" text="Resultado" prefWidth="270"/>
+                                            </columns>
+                                        </TableView>                                   </children>
                                 </VBox>
                                 <VBox prefHeight="565.0" prefWidth="470.0" spacing="10.0" styleClass="panel">
                                     <children>
@@ -92,7 +92,7 @@
                                  <children>
                                     <Label styleClass="param-label" text="Big Integer" />
                                     <TextField fx:id="txfBigInteger" />
-                                    <Button mnemonicParsing="false" styleClass="btn-primary" text="Generar Aleatorio" />
+                                    <Button mnemonicParsing="false" styleClass="btn-primary" text="Generar Aleatorio" onAction="#generarAleatorio" />
                                     <Button fx:id="btnCleanField" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" styleClass="btn-accent" text="Limpiar campo" />
                                  </children>
                                         </HBox>
