@@ -3,6 +3,7 @@ package ucr.algoritmos.pg03algoritmos.controller;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import ucr.algoritmos.pg03algoritmos.model.Probabilistic;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -55,6 +56,10 @@ public class MainController {
     }
 
     private void runMillerRabin() {
+
+        Probabilistic p = new Probabilistic();
+        String result = p.millerRabin(txfBigInteger.getText());
+
     }
 
     private void reset(int i) {
