@@ -25,4 +25,6 @@ public class MainController {
     private TextField txfBigInteger;
     @javafx.fxml.FXML
     private ListView listViewOperations;
+
+
 }
