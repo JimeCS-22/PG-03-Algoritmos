@@ -85,29 +85,29 @@
                                         <Label styleClass="action-label" text="Parámetros" />
                                         <HBox prefHeight="32.0" prefWidth="481.0">
                                  <children>
-                                    <Spinner />
+                                    <Spinner fx:id="spParams" />
                                  </children>
                                         </HBox>
                                         <HBox prefHeight="35.0" prefWidth="316.0" spacing="10.0">
                                  <children>
                                     <Label styleClass="param-label" text="Big Integer" />
-                                    <TextField />
+                                    <TextField fx:id="txfBigInteger" />
                                     <Button mnemonicParsing="false" styleClass="btn-primary" text="Generar Aleatorio" />
-                                    <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" styleClass="btn-accent" text="Limpiar campo" />
+                                    <Button fx:id="btnCleanField" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" styleClass="btn-accent" text="Limpiar campo" />
                                  </children>
                                         </HBox>
                                         <HBox prefHeight="51.0" prefWidth="421.0" spacing="10.0">
                                  <children>
                                     <HBox prefHeight="17.0" prefWidth="419.0">
                                        <children>
-                                          <Button mnemonicParsing="false" styleClass="btn-primary" text="Miller-Rabin" />
-                                          <Button mnemonicParsing="false" styleClass="btn-ghost" text="Limpiar" />
+                                          <Button fx:id="btnMillerRabin" mnemonicParsing="false" styleClass="btn-primary" text="Miller-Rabin" />
+                                          <Button fx:id="btnClean" mnemonicParsing="false" styleClass="btn-ghost" text="Limpiar" />
                                        </children>
                                     </HBox>
                                  </children>
                                         </HBox>
                               <Label styleClass="param-label" text="Registro de Operaciones" />
-                              <ListView prefHeight="200.0" prefWidth="200.0" />
+                              <ListView fx:id="listViewOperations" prefHeight="200.0" prefWidth="200.0" />
                               <VBox prefHeight="200.0" prefWidth="100.0" styleClass="info-box">
                                  <children>
                                     <Label styleClass="info-title" text="&quot;Test de Primalidad&quot; utilizando el algortimo de Miller-Rabin" />

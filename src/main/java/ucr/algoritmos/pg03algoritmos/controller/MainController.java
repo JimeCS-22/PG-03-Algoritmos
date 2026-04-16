@@ -15,29 +15,25 @@ public class MainController {
     private TabPane mainTabs;
 
     @javafx.fxml.FXML
-    private Button btnGenRandom;
-    @javafx.fxml.FXML
-    private Button btnClean;
-    @javafx.fxml.FXML
-    private Button btnMillerRabin;
-    @javafx.fxml.FXML
-    private Canvas canvasMiller;
-    @javafx.fxml.FXML
     private Spinner<BigInteger> spParams;
-    @javafx.fxml.FXML
-    private TableView<List<String>> tableViewBigNumber;
-    @javafx.fxml.FXML
-    private Button btnCleanField;
-    @javafx.fxml.FXML
-    private TextField txfBigInteger;
-    @javafx.fxml.FXML
-    private ListView listViewOperations;
 
     //TAB-1 - ATRIBUTOS INTERNOS
     BigInteger min = new BigInteger("0");
     BigInteger max = new BigInteger("1000000000000000000");
     BigInteger initial = new BigInteger("1000000000000");
     BigInteger step = new BigInteger("1");
+    @FXML
+    private Canvas canvasBin;
+    @FXML
+    private Button btnMillerRabin;
+    @FXML
+    private TextField txfBigInteger;
+    @FXML
+    private Button btnClean;
+    @FXML
+    private Button btnCleanField;
+    @FXML
+    private ListView listViewOperations;
 
     @FXML
     public void initialize() {
