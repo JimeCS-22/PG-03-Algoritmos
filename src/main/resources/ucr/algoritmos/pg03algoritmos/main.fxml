@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -22,7 +23,7 @@
             <children>
                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="16.0" stylesheets="@styles.css">
                     <children>
-                        <Label prefHeight="51.0" prefWidth="229.0" styleClass="header-badge" stylesheets="@styles.css" text="PG-02">
+                        <Label prefHeight="51.0" prefWidth="229.0" styleClass="header-badge" stylesheets="@styles.css" text="PG-03">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -107,6 +108,12 @@
                                         </HBox>
                               <Label styleClass="param-label" text="Registro de Operaciones" />
                               <ListView prefHeight="200.0" prefWidth="200.0" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" styleClass="info-box">
+                                 <children>
+                                    <Label styleClass="info-title" text="&quot;Test de Primalidad&quot; utilizando el algortimo de Miller-Rabin" />
+                                    <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="info-box" text="Algoritmo probabilistico para determinar sí un número entero grande &#10;es primo o compuesto. A diferencia de los métodos deterministas, &#10;este test es muy rápido, lo que hace fundamental en criptografía&#10;(como en RSA) para generar números primos de gran tamaño en poco &#10;tiempo.&#10;&#10;List de Big Integers para prueba&#10;10000000007 , 18446744073709551557" />
+                                 </children>
+                              </VBox>
                                     </children></VBox>
                             </items>
                         </SplitPane>
