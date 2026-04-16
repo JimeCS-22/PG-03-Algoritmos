@@ -57,7 +57,7 @@ public class MainController {
 
         Probabilistic p = new Probabilistic();
         String result = p.millerRabin(txfBigInteger.getText());
-        ObservableList<String> items = FXCollections.observableArrayList(result);
+        ObservableList<String> items = FXCollections.observableArrayList(listViewOperations.getItems());
         if(result.contains("is probably prime.")){
             //Tenemos que agregarlo al tableView
             items.add(result+="✔");
