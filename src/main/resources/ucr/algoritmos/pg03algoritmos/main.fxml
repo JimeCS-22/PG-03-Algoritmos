@@ -10,13 +10,14 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1031.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.algoritmos.pg03algoritmos.controller.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1031.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.algoritmos.pg03algoritmos.controller.MainController">
     <top>
         <VBox prefHeight="95.0" prefWidth="828.0" styleClass="header-bar" stylesheets="@styles.css" BorderPane.alignment="CENTER">
             <children>
@@ -55,11 +56,11 @@
                             <items>
                                 <VBox prefHeight="200.0" prefWidth="100.0" spacing="8.0" styleClass="panel">
                                     <children>
-                                        <Label styleClass="panel-title" text="Miller-Rabin para enteros grandes. Solución con la técnica Algoritmos Probabilistas">
+                                        <Label styleClass="panel-title" text="Miller-Rabin para enteros grandes. Solución con la técnica Algoritmos Probabilisticos">
                                             <font>
                                                 <Font size="10.0" />
                                             </font></Label>
-                                        <Canvas fx:id="canvasMiller" height="291.0" width="548.0" />
+                                        <Canvas fx:id="canvasBin" height="291.0" width="548.0" />
                                         <HBox prefHeight="100.0" prefWidth="200.0">
                                             <children>
                                                 <HBox prefHeight="100.0" prefWidth="690.0">
@@ -72,10 +73,10 @@
                                                 <HBox prefHeight="100.0" prefWidth="114.0" />
                                             </children>
                                         </HBox>
-                              <TableView fx:id="tableViewBigNumber" prefHeight="256.0" prefWidth="549.0">
+                              <TableView prefHeight="256.0" prefWidth="549.0">
                                 <columns>
-                                  <TableColumn prefWidth="167.0" text="BigNumber" />
-                                  <TableColumn prefWidth="316.0" text="Es probablemente Primo?" />
+                                  <TableColumn prefWidth="75.0" text="C1" />
+                                  <TableColumn prefWidth="75.0" text="C2" />
                                 </columns>
                               </TableView>                                    </children>
                                 </VBox>
@@ -84,29 +85,35 @@
                                         <Label styleClass="action-label" text="Parámetros" />
                                         <HBox prefHeight="32.0" prefWidth="481.0">
                                  <children>
-                                    <Spinner fx:id="spParams" />
+                                    <Spinner />
                                  </children>
                                         </HBox>
                                         <HBox prefHeight="35.0" prefWidth="316.0" spacing="10.0">
                                  <children>
-                                    <Label prefHeight="18.0" prefWidth="106.0" styleClass="param-label" text="Big Integer" />
-                                    <TextField fx:id="txfBigInteger" />
-                                    <Button fx:id="btnGenRandom" mnemonicParsing="false" styleClass="btn-primary" text="Generar Aleatorio" />
-                                    <Button fx:id="btnCleanField" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" styleClass="btn-accent" text="Limpiar campo" />
+                                    <Label styleClass="param-label" text="Big Integer" />
+                                    <TextField />
+                                    <Button mnemonicParsing="false" styleClass="btn-primary" text="Generar Aleatorio" />
+                                    <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" styleClass="btn-accent" text="Limpiar campo" />
                                  </children>
                                         </HBox>
                                         <HBox prefHeight="51.0" prefWidth="421.0" spacing="10.0">
                                  <children>
                                     <HBox prefHeight="17.0" prefWidth="419.0">
                                        <children>
-                                          <Button fx:id="btnMillerRabin" mnemonicParsing="false" styleClass="btn-primary" text="Miller-Rabin" />
-                                          <Button fx:id="btnClean" mnemonicParsing="false" styleClass="btn-ghost" text="Limpiar" />
+                                          <Button mnemonicParsing="false" styleClass="btn-primary" text="Miller-Rabin" />
+                                          <Button mnemonicParsing="false" styleClass="btn-ghost" text="Limpiar" />
                                        </children>
                                     </HBox>
                                  </children>
                                         </HBox>
                               <Label styleClass="param-label" text="Registro de Operaciones" />
-                              <ListView fx:id="listViewOperations" prefHeight="200.0" prefWidth="200.0" />
+                              <ListView prefHeight="200.0" prefWidth="200.0" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" styleClass="info-box">
+                                 <children>
+                                    <Label styleClass="info-title" text="&quot;Test de Primalidad&quot; utilizando el algortimo de Miller-Rabin" />
+                                    <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="info-box" text="Algoritmo probabilistico para determinar sí un número entero grande &#10;es primo o compuesto. A diferencia de los métodos deterministas, &#10;este test es muy rápido, lo que hace fundamental en criptografía&#10;(como en RSA) para generar números primos de gran tamaño en poco &#10;tiempo.&#10;&#10;List de Big Integers para prueba&#10;10000000007 , 18446744073709551557" />
+                                 </children>
+                              </VBox>
                                     </children></VBox>
                             </items>
                         </SplitPane>
