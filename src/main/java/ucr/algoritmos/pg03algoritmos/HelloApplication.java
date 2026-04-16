@@ -18,7 +18,7 @@ public class HelloApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1100, 720);
-        scene.getStylesheets().add(HelloApplication.class.getResource("styles.css").toExternalForm());
+        scene.getStylesheets().add(HelloApplication.class.getResource("ucr/algoritmos/pg03algoritmos/styles.css").toExternalForm());
         stage.setTitle("PG-03 IF-3001 Algoritmos y Estructuras de Datos");
         stage.setScene(scene);
         stage.show();
