@@ -1,5 +1,6 @@
 package ucr.algoritmos.pg03algoritmos.model;
 
+import java.math.BigInteger;
 import java.util.Random;
 
 public class Probabilistic {
@@ -30,6 +31,71 @@ public class Probabilistic {
             }
         }
 
+    }
+
+    public String millerRabin(String bigNumber) {
+        String result="";
+        bigNumber = bigNumber.replaceAll("\\s+", "");
+        //BigInteger number = new BigInteger("104729"); // Ejemplo de número primo
+        BigInteger number = new BigInteger(bigNumber);
+        int k = 5; // Número de repeticiones del test de Miller-Rabin
+        if (isProbablePrime(number, k))
+            result += "The big number: " + number + " is probably prime.";
+        else
+            result += "The big number: " + number + " is not prime.";
+        return result;
+    }
+
+    private boolean isProbablePrime(BigInteger n, int k) {
+
+        // Casos base
+        if (n.compareTo(BigInteger.ONE) <= 0) return false;
+        if (n.equals(BigInteger.TWO) || n.equals(BigInteger.valueOf(3))) return true;
+        if (n.mod(BigInteger.TWO).equals(BigInteger.ZERO)) return false;
+
+        // n - 1 = d * 2^r
+        BigInteger d = n.subtract(BigInteger.ONE);
+        int r = 0;
+
+        while (d.mod(BigInteger.TWO).equals(BigInteger.ZERO)) {
+            d = d.divide(BigInteger.TWO);
+            r++;
+        }
+
+        Random rand = new Random();
+
+        for (int i = 0; i < k; i++) {
+
+            // a aleatorio en [2, n-2]
+            BigInteger a;
+            do {
+                a = new BigInteger(n.bitLength(), rand);
+            } while (a.compareTo(BigInteger.TWO) < 0 || a.compareTo(n.subtract(BigInteger.TWO)) > 0);
+
+            // x = a^d mod n
+            BigInteger x = a.modPow(d, n);
+
+            if (x.equals(BigInteger.ONE) || x.equals(n.subtract(BigInteger.ONE)))
+                continue;
+
+            boolean continueOuter = false;
+
+            for (int j = 0; j < r - 1; j++) {
+                x = x.modPow(BigInteger.TWO, n);
+
+                if (x.equals(n.subtract(BigInteger.ONE))) {
+                    continueOuter = true;
+                    break;
+                }
+            }
+
+            if (continueOuter)
+                continue;
+
+            return false; // compuesto
+        }
+
+        return true; // probablemente primo
     }
 }
 

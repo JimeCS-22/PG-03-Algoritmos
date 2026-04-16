@@ -1,5 +1,6 @@
 package util;
 
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.Random;
 
@@ -22,5 +23,15 @@ public class Utility {
 
     public static int random(int min, int max) {   //min y max incluyentes
         return min + random.nextInt((max - min) + 1);
+    }
+
+    public static String formatBig(String number) {
+
+        number = number.replaceAll("\\s+", ""); // limpiar espacios
+
+        BigInteger big = new BigInteger(number);
+        DecimalFormat formatter = new DecimalFormat("#,###");
+
+        return formatter.format(big);
     }
 }
