@@ -1,19 +1,12 @@
 package ucr.algoritmos.pg03algoritmos.model;
 
-public class Node {
+public class Node<T> {
 
-    public Object data;
-    public Node prev; //apuntador al nodo anterior
-    public Node next; //apuntador al nodo siguiente
+    public T data;
+    public Node<T> next; //apuntador al nodo siguiente
 
-    //Constructor 1
-    public Node(Object data) {
+    public Node(T data, Node<T> next) {
         this.data = data;
-        this.prev = this.next = null; //puntero al sgte nodo es nulo por default
-    }
-
-    //Constructor 2
-    public Node() {
-        this.prev = this.next = null;
+        this.next = null;//Por default que apunta a nulo
     }
 }
