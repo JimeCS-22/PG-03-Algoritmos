@@ -50,6 +50,15 @@ class LinkedListTest {
             }
 
             System.out.println("------------------------");
+            System.out.println("Linked list getFirst " + linkedList.getFirst());
+            System.out.println("Linked list getLast " + linkedList.getLast());
+            System.out.println("------------------------");
+            int n =  linkedList.size();
+            for (int i = 1; i<n; i++) {
+
+                System.out.println("get ( " + i + " ) = " + linkedList.get(i));
+            }
+
 
         } catch (ListException e) {
             throw new RuntimeException(e);

@@ -120,6 +120,7 @@ public class LinkedList <T> implements List<T>{
     @Override
     public void sort() throws ListException {
 
+
     }
 
     @Override
@@ -138,17 +139,40 @@ public class LinkedList <T> implements List<T>{
 
     @Override
     public T getFirst() throws ListException {
-        return null;
+        if(isEmpty())
+            throw new ListException("Linked List is empty");
+        return head.data;
     }
 
     @Override
     public T getLast() throws ListException {
-        return null;
+        if(isEmpty())
+            throw new ListException("Linked List is empty");
+
+        return tail.data;
     }
 
     @Override
     public T getPrev(T element) throws ListException {
-        return null;
+        if (isEmpty())
+            throw new ListException("Linked List is empty");
+
+        Node<T> aux = head;
+        Node<T> prev = null;
+
+        while (aux != null) {
+            if (equals(aux.data, element)) {
+                if (prev != null) {
+                    return prev.data; // Retorna el dato anterior.
+                } else {
+                    throw new ListException("It's the first element, it has no prev");
+                }
+            }
+            prev = aux;
+            aux = aux.next;
+        }
+        // Si llegamos aquí, el elemento no está en la lista
+        throw new ListException("Element does not exist in Linked List");
     }
 
     @Override
@@ -158,6 +182,19 @@ public class LinkedList <T> implements List<T>{
 
     @Override
     public T get(int index) throws ListException {
+
+        if (isEmpty())
+            throw new ListException("Linked List is empty");
+
+        Node<T> aux = head;
+        int count = 1;
+
+        while(aux!=null){
+            if (count ++== index) {
+                return aux.data;
+            }
+        }
+
         return null;
     }
 
