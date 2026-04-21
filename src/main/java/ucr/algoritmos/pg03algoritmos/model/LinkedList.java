@@ -7,17 +7,27 @@ public class LinkedList <T> implements List<T>{
 
     @Override
     public int size() throws ListException {
-        return 0;
+            if(isEmpty())
+                throw new ListException("Singly Linked List is empty");
+            int counter = 0; //contador de nodos
+            Node aux = head; //aux para moverme por la lista y no perder el puntero al inicio
+            while(aux!=null){
+                counter++;
+                aux = aux.next;
+            }
+            return counter;
     }
 
     @Override
     public void clear() {
 
+        this.head = null;
+
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return head == null;
     }
 
     @Override
@@ -27,6 +37,15 @@ public class LinkedList <T> implements List<T>{
         if (head == null) {
             head = node;
             tail = node;
+        }else{//Significa que head apunta a un nodo existente
+            Node<T> aux = head;
+            //Me muevo por la lista hasta alcanzar el ultimo elemento
+            while(aux.next!=null){
+                aux = aux.next;//lo mueve al siguiente nodo
+            }
+            //Cuando se sale del while aux.next == null
+            aux.next = node;
+            tail = node; //Lo ponemos a apuntar al ultimo nodo de la lista
         }
 
     }
