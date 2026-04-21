@@ -120,4 +120,26 @@ public class LinkedList <T> implements List<T>{
     public T get(int index) throws ListException {
         return null;
     }
+
+    @Override
+    public String toString() {
+
+        StringBuilder  sb = new StringBuilder("HEAD ➡️");
+        Node<T> aux = head;
+
+        while (aux != null){
+
+            sb.append("[").append(aux.data).append("]");
+
+            if (aux.next != null) sb.append("➡️");
+
+            aux = aux.next;
+
+
+        }
+
+        sb.append("➡️ NULL ");
+
+        return sb.toString();
+    }
 }
