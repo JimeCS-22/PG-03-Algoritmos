@@ -5,6 +5,23 @@ public class LinkedList <T> implements List<T>{
     private Node<T> head;//inicio de la lista
     private Node<T> tail;//Fin de la lista
 
+
+    public LinkedList() {
+    }
+
+    public LinkedList(Node<T> head, Node<T> tail) {
+        this.head = null;
+        this.tail = null;
+    }
+
+    public Node<T> getHead() {
+        return head;
+    }
+
+    public Node<T> getTail() {
+        return tail;
+    }
+
     @Override
     public int size() throws ListException {
             if(isEmpty())
@@ -52,6 +69,11 @@ public class LinkedList <T> implements List<T>{
 
     @Override
     public void addFirst(T element) {
+
+        Node<T> node = new Node<>(element);
+        node.next = head;
+        head = node;//Pq el nuevo nodo quede de primero
+
 
     }
 

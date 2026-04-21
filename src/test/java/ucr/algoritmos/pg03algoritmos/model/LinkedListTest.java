@@ -22,6 +22,15 @@ class LinkedListTest {
         }
         System.out.println(linkedList);
 
+        //quiero ver la data de ult nodo de la lista
+        System.out.println("getHead " + linkedList.getHead().data);
+        System.out.println("getTail " + linkedList.getTail().data);
+        System.out.println("------------------------");
+        System.out.println("addFirst " );
+        linkedList.addFirst(100);
+        System.out.println("addFirst ");
+        linkedList.addFirst(200);
+
 
     }
 
