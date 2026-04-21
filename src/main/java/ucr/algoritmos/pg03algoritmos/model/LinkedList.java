@@ -23,6 +23,12 @@ public class LinkedList <T> implements List<T>{
     @Override
     public void add(T element) {
 
+        Node<T> node = new Node<>(element);
+        if (head == null) {
+            head = node;
+            tail = node;
+        }
+
     }
 
     @Override
@@ -32,6 +38,7 @@ public class LinkedList <T> implements List<T>{
 
     @Override
     public void addLast(T element) {
+        add(element);//El metodo add por default agrega a final
 
     }
 

@@ -9,4 +9,8 @@ public class Node<T> {
         this.data = data;
         this.next = null;//Por default que apunta a nulo
     }
+
+    public Node(T data) {
+        this.data = data;
+    }
 }
