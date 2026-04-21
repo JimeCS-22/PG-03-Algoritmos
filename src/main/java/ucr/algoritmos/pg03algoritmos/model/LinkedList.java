@@ -25,9 +25,9 @@ public class LinkedList <T> implements List<T>{
     @Override
     public int size() throws ListException {
             if(isEmpty())
-                throw new ListException("Singly Linked List is empty");
+                throw new ListException("Linked List is empty");
             int counter = 0; //contador de nodos
-            Node aux = head; //aux para moverme por la lista y no perder el puntero al inicio
+            Node<T> aux = head; //aux para moverme por la lista y no perder el puntero al inicio
             while(aux!=null){
                 counter++;
                 aux = aux.next;
@@ -105,8 +105,17 @@ public class LinkedList <T> implements List<T>{
 
     @Override
     public boolean contains(T element) throws ListException {
-        return false;
+        if(isEmpty())
+            throw new ListException("Linked List is empty");
+        Node<T> aux = head;//aux para moverme en la lista
+        while(aux!=null){
+            if(equals(aux.data, element)) return true; //ya lo encontro
+            aux = aux.next; //muevo aux al nodo sgte
+        }
+        return false; //significa que no encontro el elemento
     }
+
+
 
     @Override
     public void sort() throws ListException {
@@ -115,7 +124,16 @@ public class LinkedList <T> implements List<T>{
 
     @Override
     public int indexOf(T element) throws ListException {
-        return 0;
+        if(isEmpty())
+            throw new ListException("Linked List is empty");
+        Node<T> aux = head;
+        int index = 1; //el primer indice de la lista es 1
+        while(aux!=null){
+            if(equals(aux.data, element)) return index;
+            index++;
+            aux = aux.next;
+        }
+        return -1; //significa q el elemento no existe en la lista
     }
 
     @Override
@@ -163,5 +181,23 @@ public class LinkedList <T> implements List<T>{
         sb.append("➡️ NULL ");
 
         return sb.toString();
+    }
+
+    /* ---- AYUDAS-----*/
+    private boolean equals(T a, T b){
+
+        return a== null ? b== null : a.equals(b);
+
+    }
+
+    private Node<T> getNode(T element) throws ListException {
+        if (isEmpty()) throw new ListException("Linked List is empty");
+        Node<T> aux = head;
+        while (aux!=null){
+            if (equals(aux.data, element)) return aux;
+            aux = aux.next;
+        }
+
+        return null;
     }
 }

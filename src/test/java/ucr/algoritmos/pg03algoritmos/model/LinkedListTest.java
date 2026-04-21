@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LinkedListTest {
 
     @Test
-    public void LinkedListTest() {
+    public void LinkedListTest()  {
 
         LinkedList<Integer> linkedList = new LinkedList<>();
         linkedList.add(20);
@@ -25,6 +25,8 @@ class LinkedListTest {
         //quiero ver la data de ult nodo de la lista
         System.out.println("getHead " + linkedList.getHead().data);
         System.out.println("getTail " + linkedList.getTail().data);
+
+        //Agregar en el primero
         System.out.println("------------------------");
         System.out.println("addFirst " );
         linkedList.addFirst(100);
@@ -32,6 +34,30 @@ class LinkedListTest {
         System.out.println("addFirst ");
         linkedList.addFirst(200);
         System.out.println(linkedList);
+
+        //Size
+        System.out.println("------------------------");
+        try {
+            System.out.println("LinkedList size: " + linkedList.size());
+
+            //Buscar elemento e index Of
+            System.out.println("------------------------");
+            for(int i = 0; i < 10; i++){
+                int value = new Random().nextInt(50);
+                System.out.println(linkedList.contains(value) ? "value [ " + value + " ] exists. Position:  "
+                        + linkedList.indexOf(value)
+                        : "value " + value +  " not found");
+            }
+
+            System.out.println("------------------------");
+
+        } catch (ListException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+
 
 
 
