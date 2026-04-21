@@ -28,8 +28,11 @@ class LinkedListTest {
         System.out.println("------------------------");
         System.out.println("addFirst " );
         linkedList.addFirst(100);
+        System.out.println(linkedList);
         System.out.println("addFirst ");
         linkedList.addFirst(200);
+        System.out.println(linkedList);
+
 
 
     }
