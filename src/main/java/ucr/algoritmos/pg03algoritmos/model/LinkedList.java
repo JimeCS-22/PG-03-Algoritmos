@@ -137,26 +137,18 @@ public class LinkedList<T> implements List<T> {
     public T removeLast() throws ListException {
         if (isEmpty())
             throw new ListException("Linked List is empty");
-        T last = tail.data;
 
-        if (head == tail) { // Solo un elemento
-            T value = head.data;
-            head = null;
-            tail = null;
-            return value;
-        }
         Node<T> aux = head;
-        Node<T> prev = null;
+        Node<T> prev = head;
         while (aux.next != null) {
-            prev = aux;
+            prev = aux;//dejamos un rastro en el modo auxiliar
             aux = aux.next;
         }
-        T element = aux.data;
-        if (prev != null) {
-            prev.next = null;
-            tail = prev;
-        }
-        return element;
+        //Se sale del while cuando aux esta en el ultimo nodo
+        T last = aux.data;//la data del nodo
+        prev.next = null;
+        tail = prev;//para que tail quede apuntando al ult nodo
+        return last;
     }
 
     @Override
