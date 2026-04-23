@@ -221,11 +221,7 @@ public class LinkedList<T> implements List<T> {
 
         while (aux != null) {
             if (equals(aux.data, element)) {
-                if (prev != null) {
-                    return prev.data;
-                } else {
-                    throw new ListException("It's the first element, it has no prev");
-                }
+                return (prev == null) ? null : prev.data;
             }
             prev = aux;
             aux = aux.next;
@@ -239,13 +235,13 @@ public class LinkedList<T> implements List<T> {
             throw new ListException("Linked List is empty");
 
         Node<T> aux = head;
-        while (aux != null && aux.next != null) {
+        while (aux != null) {
             if (equals(aux.data, element)) {
-                return aux.next.data;
+                return (aux.next == null) ? null : aux.next.data;
             }
             aux = aux.next;
         }
-        throw new ListException("Element has no next or does not exist in Linked List");
+        throw new ListException("Element does not exist in Linked List");
     }
 
     @Override

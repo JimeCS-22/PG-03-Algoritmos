@@ -70,7 +70,9 @@ class LinkedListTest {
             int n =  linkedList.size();
             for (int i = 1; i<n; i++) {
 
-                System.out.println("get ( " + i + " ) = " + linkedList.get(i));
+                System.out.println("get ( " + i + " ) = " + linkedList.get(i) +
+                        " | getPrev (" + linkedList.get(i) + ") = " + linkedList.getPrev(linkedList.get(i)) +
+                        " | getNext (" + linkedList.get(i) + ") = " + linkedList.getNext(linkedList.get(i)));
             }
 
             //Ordernar
