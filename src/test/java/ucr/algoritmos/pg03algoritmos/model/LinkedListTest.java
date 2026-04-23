@@ -92,12 +92,15 @@ class LinkedListTest {
         linkedList.add(20);
         linkedList.add(10);
         linkedList.add(15);
+        linkedList.add(30);
 
         System.out.println(linkedList);
         System.out.println("------------------------");
 
         //Borrar
         System.out.println("Remove Firs -> " + linkedList.removeFirst());
+        System.out.println("Remove Last -> " + linkedList.removeLast());
+        System.out.println("Remove Last -> " + linkedList.removeLast());
         System.out.println("Remove Last -> " + linkedList.removeLast());
         System.out.println("------------------------");
 
