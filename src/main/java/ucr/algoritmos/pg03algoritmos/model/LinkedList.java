@@ -148,6 +148,8 @@ public class LinkedList<T> implements List<T> {
         T last = aux.data;//la data del nodo
         prev.next = null;
         tail = prev;//para que tail quede apuntando al ult nodo
+        //Validacion si solo queda un nodo
+        if (head == tail) clear();//anulamos la lista
         return last;
     }
 
