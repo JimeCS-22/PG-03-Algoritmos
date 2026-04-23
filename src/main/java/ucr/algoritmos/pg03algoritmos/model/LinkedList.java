@@ -226,7 +226,7 @@ public class LinkedList<T> implements List<T> {
             prev = aux;
             aux = aux.next;
         }
-        throw new ListException("Element does not exist in Linked List");
+        return null;
     }
 
     @Override
@@ -237,11 +237,11 @@ public class LinkedList<T> implements List<T> {
         Node<T> aux = head;
         while (aux != null) {
             if (equals(aux.data, element)) {
-                return (aux.next == null) ? null : aux.next.data;
+                return aux.next != null ? aux.next.data : null;
             }
             aux = aux.next;
         }
-        throw new ListException("Element does not exist in Linked List");
+        return null;
     }
 
     @Override
