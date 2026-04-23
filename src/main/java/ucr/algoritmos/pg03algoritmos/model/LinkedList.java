@@ -75,8 +75,29 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public void addInSortedList(T element) {
-        // Aquí puedes lanzar excepción si no deseas implementar aún:
-        throw new UnsupportedOperationException("Método no implementado");
+        Node<T> newNode = new Node<>(element);
+
+        // Lista vacía o debe ir al inicio
+        if (isEmpty() || ((Comparable<T>) element).compareTo(head.data) < 0) {
+            newNode.next = head;
+            head = newNode;
+            if (tail == null)
+                tail = newNode;
+            return;
+        }
+
+        Node<T> current = head;
+        // Buscar dónde insertar
+        while (current.next != null && ((Comparable<T>) element).compareTo(current.next.data) > 0) {
+            current = current.next;
+        }
+
+        // Insertar después de current
+        newNode.next = current.next;
+        current.next = newNode;
+        // Si se insertó al final, actualizar tail
+        if (newNode.next == null)
+            tail = newNode;
     }
 
     @Override

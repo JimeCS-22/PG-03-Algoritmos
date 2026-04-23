@@ -59,6 +59,13 @@ class LinkedListTest {
                 System.out.println("get ( " + i + " ) = " + linkedList.get(i));
             }
 
+            //Eliminar
+            //Ordernar
+            //Eliminar el primero
+            //Eliminar el ultimo
+            //getPrev
+            //getNext
+
 
         } catch (ListException e) {
             throw new RuntimeException(e);
