@@ -57,8 +57,14 @@ class LinkedListTest {
 
 
             //Remove
-            int value = linkedList.removeFirst();
-            System.out.println("removeFirst: "+ value);
+
+            //Eliminar el primero
+            //Eliminar el ultimo
+            System.out.println("removeFirst: "+  linkedList.removeFirst());
+            System.out.println("removeLast: "+  linkedList.removeLast());
+            System.out.println("removeLast: "+  linkedList.removeLast());
+            System.out.println("------------------------");
+            System.out.println(linkedList);
 
             //Probamos Get
             int n =  linkedList.size();
@@ -67,10 +73,8 @@ class LinkedListTest {
                 System.out.println("get ( " + i + " ) = " + linkedList.get(i));
             }
 
-            //Eliminar
             //Ordernar
-            //Eliminar el primero
-            //Eliminar el ultimo
+
             //getPrev
             //getNext
 
