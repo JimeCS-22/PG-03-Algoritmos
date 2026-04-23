@@ -83,12 +83,25 @@ class LinkedListTest {
             throw new RuntimeException(e);
         }
 
+    }
 
 
+    @Test
+    public void LinkedListTest2() throws ListException{
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        linkedList.add(20);
+        linkedList.add(10);
+        linkedList.add(15);
 
+        System.out.println(linkedList);
+        System.out.println("------------------------");
 
+        //Borrar
+        System.out.println("Remove Firs -> " + linkedList.removeFirst());
+        System.out.println("Remove Last -> " + linkedList.removeLast());
+        System.out.println("------------------------");
 
-
+        System.out.println(linkedList);
     }
 
 }
