@@ -127,16 +127,18 @@ public class LinkedList<T> implements List<T> {
     public T removeFirst() throws ListException {
         if (isEmpty())
             throw new ListException("Linked List is empty");
-        T value = head.data;
+        T first = head.data;
         head = head.next;
         if (head == null) tail = null;
-        return value;
+        return first;
     }
 
     @Override
     public T removeLast() throws ListException {
         if (isEmpty())
             throw new ListException("Linked List is empty");
+        T last = tail.data;
+
         if (head == tail) { // Solo un elemento
             T value = head.data;
             head = null;

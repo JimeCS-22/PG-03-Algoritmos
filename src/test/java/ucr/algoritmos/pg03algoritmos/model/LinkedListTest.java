@@ -49,10 +49,18 @@ class LinkedListTest {
                         : "value " + value +  " not found");
             }
 
+
             System.out.println("------------------------");
             System.out.println("Linked list getFirst " + linkedList.getFirst());
             System.out.println("Linked list getLast " + linkedList.getLast());
             System.out.println("------------------------");
+
+
+            //Remove
+            int value = linkedList.removeFirst();
+            System.out.println("removeFirst: "+ value);
+
+            //Probamos Get
             int n =  linkedList.size();
             for (int i = 1; i<n; i++) {
 
