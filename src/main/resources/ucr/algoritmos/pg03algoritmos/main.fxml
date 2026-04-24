@@ -15,6 +15,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -145,14 +146,18 @@
                                     <HBox prefHeight="100.0" prefWidth="114.0" />
                                  </children>
                               </HBox>
-                              <TableView fx:id="tableResults1" prefHeight="256.0" prefWidth="549.0">
-                                 <columns>
-                                    <TableColumn fx:id="colValue" prefWidth="107.0" text="Valor" />
-                                    <TableColumn fx:id="colIndex" prefWidth="93.0" text="Indice" />
-                                    <TableColumn fx:id="colAttempts" prefWidth="106.0" text="Intenos registrados" />
-                                    <TableColumn fx:id="colMaxAttempts" prefWidth="120.0" text="Máximo de intentos" />
-                                 </columns>
-                              </TableView>
+                              <Pane styleClass="custom-table-container">
+                                 <children>
+                                    <TableView fx:id="tableResults1" layoutY="-62.0" prefHeight="207.0" prefWidth="549.0" styleClass="custom-table">
+                                       <columns>
+                                          <TableColumn fx:id="colValue" prefWidth="107.0" styleClass="custom-" text="Valor" />
+                                          <TableColumn fx:id="colIndex" prefWidth="93.0" text="Indice" />
+                                          <TableColumn fx:id="colAttempts" prefWidth="106.0" text="Intenos registrados" />
+                                          <TableColumn fx:id="colMaxAttempts" prefWidth="120.0" text="Máximo de intentos" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </Pane>
                            </children>
                         </VBox>
                         <VBox prefHeight="565.0" prefWidth="470.0" spacing="10.0" styleClass="panel">
