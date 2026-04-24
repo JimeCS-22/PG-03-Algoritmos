@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
@@ -75,8 +76,8 @@
                                         </HBox>
                                         <TableView fx:id="tableResults" prefHeight="256.0" prefWidth="549.0">
                                             <columns>
-                                                <TableColumn fx:id="colNumber" text="Número" prefWidth="270"/>
-                                                <TableColumn fx:id="colResult" text="Resultado" prefWidth="270"/>
+                                                <TableColumn fx:id="colNumber" prefWidth="270" text="Número" />
+                                                <TableColumn fx:id="colResult" prefWidth="270" text="Resultado" />
                                             </columns>
                                         </TableView>                                   </children>
                                 </VBox>
@@ -92,7 +93,7 @@
                                  <children>
                                     <Label styleClass="param-label" text="Big Integer" />
                                     <TextField fx:id="txfBigInteger" />
-                                    <Button mnemonicParsing="false" styleClass="btn-primary" text="Generar Aleatorio" onAction="#generarAleatorio" />
+                                    <Button mnemonicParsing="false" onAction="#generarAleatorio" styleClass="btn-primary" text="Generar Aleatorio" />
                                     <Button fx:id="btnCleanField" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" styleClass="btn-accent" text="Limpiar campo" />
                                  </children>
                                         </HBox>
@@ -119,6 +120,159 @@
                         </SplitPane>
                     </content>
                 </Tab>
+            <Tab text="Random Search">
+               <content>
+                  <SplitPane dividerPositions="0.5615906886517944" prefHeight="200.0" prefWidth="200.0">
+                     <items>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="8.0" styleClass="panel">
+                           <children>
+                              <Label styleClass="panel-title" text="Búsqueda aleatoria en un arreglo con un máximo de intentos permitidos">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="ArrayText" editable="false" styleClass="amber-card" />
+                              <Canvas fx:id="canvasBin" height="222.0" width="548.0" />
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="690.0">
+                                       <children>
+                                          <Label styleClass="param-label" text="Lista de elementos encontrados con el algoritmo Random Search" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="115.0" />
+                                    <HBox prefHeight="100.0" prefWidth="131.0" />
+                                    <HBox prefHeight="100.0" prefWidth="114.0" />
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="tableResults1" prefHeight="256.0" prefWidth="549.0">
+                                 <columns>
+                                    <TableColumn fx:id="colValue" prefWidth="107.0" text="Valor" />
+                                    <TableColumn fx:id="colIndex" prefWidth="93.0" text="Indice" />
+                                    <TableColumn fx:id="colAttempts" prefWidth="106.0" text="Intenos registrados" />
+                                    <TableColumn fx:id="colMaxAttempts" prefWidth="120.0" text="Máximo de intentos" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="565.0" prefWidth="470.0" spacing="10.0" styleClass="panel">
+                           <children>
+                              <Label styleClass="action-label" text="Parámetros" />
+                              <HBox prefHeight="32.0" prefWidth="481.0">
+                                 <children>
+                                    <Slider fx:id="sliderPara" prefHeight="14.0" prefWidth="433.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="35.0" prefWidth="316.0" spacing="10.0">
+                                 <children>
+                                    <Label styleClass="param-label" text="Valor" />
+                                    <TextField fx:id="txtValue" prefHeight="22.0" prefWidth="62.0" />
+                                    <Label styleClass="param-label" text="Max Attempts" />
+                                    <TextField fx:id="txtMaxAttempts" layoutX="56.0" layoutY="10.0" prefHeight="22.0" prefWidth="62.0" />
+                                    <Button fx:id="btnGenerate" mnemonicParsing="false" styleClass="btn-primary" text="Generar Aleatorio" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="51.0" prefWidth="421.0" spacing="10.0">
+                                 <children>
+                                    <HBox prefHeight="17.0" prefWidth="419.0">
+                                       <children>
+                                          <Button fx:id="btnRandomSearch" mnemonicParsing="false" styleClass="btn-primary" text="Random Search" />
+                                          <Button fx:id="btnClean" mnemonicParsing="false" styleClass="btn-ghost" text="Limpiar" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <Label styleClass="param-label" text="Registro de Operaciones" />
+                              <ListView fx:id="listViewOperationsRandom" prefHeight="200.0" prefWidth="200.0" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" styleClass="info-box">
+                                 <children>
+                                    <Label styleClass="info-title" text="Búsqueda aleatoria en un arreglo" />
+                                    <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="info-box" text="Devuelve un arreglo de 2 elementos con el indice encontrado y l número de &#10;intentos realizados. Si el índice es -1 significa que el elemento no fue encontrado&#10;en el máximo de intentos permitidos." />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+            <Tab text="Linked List">
+               <content>
+                  <SplitPane dividerPositions="0.5615906886517944" prefHeight="200.0" prefWidth="200.0">
+                     <items>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="8.0" styleClass="panel">
+                           <children>
+                              <Label styleClass="panel-title" text="Lista enlazada simple: HEAD➡️ nodes ➡️ NULL">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <Canvas fx:id="canvasList" height="189.0" width="548.0" />
+                              <Label styleClass="axis-label" text="Contenido de la Lista Enlazada Simple" />
+                              <TableView fx:id="tableResults2" prefHeight="211.0" prefWidth="548.0">
+                                 <columns>
+                                    <TableColumn fx:id="colPosition" prefWidth="75.0" text="Posición" />
+                                    <TableColumn fx:id="colValue" prefWidth="75.0" text="Elemento" />
+                                    <TableColumn fx:id="colInsert" prefWidth="75.0" text="Se inserto al" />
+                                 </columns>
+                              </TableView>
+                              <VBox prefHeight="37.0" prefWidth="548.0">
+                                 <children>
+                                    <Label styleClass="axis-label" text="Representación:" />
+                                    <Label text="..." />
+                                 </children>
+                              </VBox>
+                              <HBox prefHeight="54.0" prefWidth="548.0">
+                                 <children>
+                                    <Label text="Insertado :" />
+                                    <Label text="..." />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="565.0" prefWidth="470.0" spacing="10.0" styleClass="panel">
+                           <children>
+                              <HBox prefHeight="32.0" prefWidth="481.0">
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label styleClass="param-label" text="Valor" />
+                                          <TextField fx:id="textFieldValue" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="35.0" prefWidth="316.0" spacing="10.0">
+                                 <children>
+                                    <Button fx:id="btnAgregarInicio" mnemonicParsing="false" styleClass="btn-primary" text="Agregar inicio" />
+                                    <Button fx:id="btnAgregarFinal" mnemonicParsing="false" prefHeight="30.0" prefWidth="111.0" styleClass="btn-primary" text="Agregar final" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="51.0" prefWidth="421.0" spacing="10.0">
+                                 <children>
+                                    <HBox prefHeight="17.0" prefWidth="419.0">
+                                       <children>
+                                          <Button fx:id="btnSearch" mnemonicParsing="false" styleClass="btn-primary" text="Buscar" />
+                                          <Button fx:id="btnDelete" mnemonicParsing="false" styleClass="btn-accent" text="Eliminar" />
+                                          <Button fx:id="btnClearList" mnemonicParsing="false" styleClass="btn-ghost" text="Limpiar Todo" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <Label styleClass="param-label" text="Registro de Operaciones" />
+                              <ListView fx:id="listViewOperationsList" prefHeight="200.0" prefWidth="200.0" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" styleClass="info-box">
+                                 <children>
+                                    <Label styleClass="info-title" text="Estructura del Nodo" />
+                                    <TextArea editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="info-box" text="class Node&lt;T&gt; {&#10;     T data; // dato almacenado en el nodo&#10;      Node&lt;T&gt; next; //apuntador al siguiente nodo o a Null&#10;}&#10;" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
 
             </tabs>
         </TabPane>

@@ -106,9 +106,6 @@ class LinkedListTest {
         System.out.println("Remove Last -> " + linkedList.removeLast());
         System.out.println("------------------------");
 
-        //Este manda una excepción de lista vacía
-        //System.out.println("Remove Last -> " + linkedList.removeLast());
-
         System.out.println(linkedList);
     }
 
