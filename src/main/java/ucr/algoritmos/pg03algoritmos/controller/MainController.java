@@ -10,11 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import ucr.algoritmos.pg03algoritmos.model.LinkedList;
-import ucr.algoritmos.pg03algoritmos.model.MillerRabinResult;
-import ucr.algoritmos.pg03algoritmos.model.Node;
+import ucr.algoritmos.pg03algoritmos.model.*;
 import ucr.algoritmos.pg03algoritmos.model.Node.*;
-import ucr.algoritmos.pg03algoritmos.model.Probabilistic;
 import ucr.algoritmos.pg03algoritmos.util.BigIntegerSpinnerValueFactory;
 
 import java.math.BigInteger;
@@ -22,13 +19,9 @@ import java.security.SecureRandom;
 
 public class MainController {
 
+    // TAB: Miller-Rabin
+    @FXML private TabPane mainTabs;
     @FXML private Spinner<BigInteger> spParams;
-
-    BigInteger min = new BigInteger("1");
-    BigInteger max = new BigInteger("999999999999999999");
-    BigInteger initial = new BigInteger("1000000000000");
-    BigInteger step = new BigInteger("1");
-
     @FXML private Canvas canvasMiller;
     @FXML private Button btnMillerRabin;
     @FXML private TextField txfBigInteger;
@@ -40,90 +33,57 @@ public class MainController {
     @FXML private TableColumn<MillerRabinResult, String> colNumber;
     @FXML private TableColumn<MillerRabinResult, String> colResult;
 
+    //TAB: Random Search
+    @FXML private Button btnCleanSearch;
+    @FXML private Slider sliderParaSearch;
+    @FXML private TableColumn<RandomSearchResult, Integer> colValueSearch;
+    @FXML private TableColumn<RandomSearchResult, Integer> colIndexSearch;
+    @FXML private TableColumn<RandomSearchResult, Integer> colAttemptsSearch;
+    @FXML private TableColumn<RandomSearchResult, Integer> colMaxAttemptsSearch;
+    @FXML private TextField txtValueSearch;
+    @FXML private Button btnRandomSearchSearch;
+    @FXML private TextField arrayTextSearch;
+    @FXML private Canvas canvasSearch;
+    @FXML private Button btnGenerateSearch;
+    @FXML private TextField txtMaxAttemptsSearch;
+    @FXML private ListView<String> listViewOperationsSearch;
+    @FXML private TableView<RandomSearchResult> tableResultsSearch;
 
-    //atributos Tab Random Search and List
-    @FXML
-    private TextField ArrayText;
+    // Random Search: estado
+    private int[] randomArraySearch = new int[0];
+    private final ObservableList<RandomSearchResult> randomSearchResults = FXCollections.observableArrayList();
 
-    @FXML
-    private Button btnAgregarFinal;
+    // TAB: Linked List
+    @FXML private TextField textFieldValue;
+    @FXML private Button btnAgregarInicio;
+    @FXML private Button btnAgregarFinal;
+    @FXML private Button btnSearch;
+    @FXML private Button btnDelete;
+    @FXML private Button btnClearList;
+    @FXML private Canvas canvasListDraw;
+    @FXML private TableView<NodeInfo> tableLinkedList;
+    @FXML private TableColumn<NodeInfo, String> colPosition;
+    @FXML private TableColumn<NodeInfo, String> colValue;
+    @FXML private TableColumn<NodeInfo, String> colInsert;
+    @FXML private ListView<String> listViewOperationsList;
+    @FXML private TextArea txAreaNodeStructure;
+    @FXML private Label txFieldNodeRepre;
+    @FXML private Label txtInsertadoIn;
 
-    @FXML
-    private Button btnAgregarInicio;
-
-
-    @FXML
-    private Button btnClearList;
-
-    @FXML
-    private Button btnDelete;
-
-    @FXML
-    private Button btnGenerate;
-
-    @FXML
-    private Button btnRandomSearch;
-
-    @FXML
-    private TableColumn<?, ?> colAttempts;
-    @FXML
-    private TableColumn<?, ?> colIndex;
-    @FXML
-    private TableColumn<?, ?> colMaxAttempts;
-
-    @FXML
-    private Button btnSearch;
-    @FXML
-    private Canvas canvasListDraw;
-    @FXML
-    private TableView<NodeInfo> tableLinkedList;
-    @FXML
-    private TableColumn<NodeInfo, String> colInsert;
-    @FXML
-    private TableColumn<NodeInfo, String> colValue;
-    @FXML
-    private TableColumn<NodeInfo, String> colPosition;
-
-    @FXML
-    private ListView<String> listViewOperationsList;
-
-    @FXML
-    private ListView<?> listViewOperationsRandom;
-
-    @FXML
-    private TabPane mainTabs;
-
-    @FXML
-    private Slider sliderPara;
-
-
-
-    @FXML
-    private TableView<?> tableResults1;
-
-    @FXML
-    private TextField textFieldValue;
-
-    @FXML
-    private TextArea txAreaNodeStructure;
-
-    @FXML
-    private Label txFieldNodeRepre;
-
-    @FXML
-    private Label txtInsertadoIn;
-
-    @FXML
-    private TextField txtMaxAttempts;
-
-    @FXML
-    private TextField txtValue;
-    private final SecureRandom random = new SecureRandom();
-
-    //atributos para Linked List
+    // Linked List: estado del modelo
     private LinkedList<String> list;
     private ObservableList<NodeInfo> dataTable;
-    private int contadorPosicion; // atributo en tu Controller
+    private int contadorPosicion;
+
+
+    // Variables
+    BigInteger min = new BigInteger("1");
+    BigInteger max = new BigInteger("999999999999999999");
+    BigInteger initial = new BigInteger("1000000000000");
+    BigInteger step = new BigInteger("1");
+    private final SecureRandom random = new SecureRandom();
+
+
 
     @FXML
     public void initialize() {
@@ -279,21 +239,6 @@ public class MainController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    //Methods Controller for Random Search @Alexander
-
-    private void setupRandomSearch() {
-        //config objetos
-//        btnAgregarInicio.setOnAction(e -> addFirst());
-//        btnAgregarFinal.setOnAction(e -> addLast());
-//        btnSearch.setOnAction(e -> runSearchInLinkedList());
-//        btnDelete.setOnAction(e -> cleanListTab());
-//        btnClearList.setOnAction(e -> runSearchInLinkedList());
-    }
-
-
-
-
 
     //Methods Controller for Linked List - Camila
 
@@ -577,6 +522,211 @@ public class MainController {
         } catch (Exception e) {
             showAlert("Error", "Valor inválido");
         }
+    }
+
+    // =======================
+// TAB: Random Search
+// =======================
+
+    private static final int VISIBLE = 12;
+
+    private void setupRandomSearch() {
+
+        sliderParaSearch.setMin(0);
+        sliderParaSearch.setMax(99);
+        sliderParaSearch.setValue(20);
+        sliderParaSearch.setMajorTickUnit(5);
+        sliderParaSearch.setMinorTickCount(0);
+        sliderParaSearch.setSnapToTicks(true);
+
+        sliderParaSearch.valueProperty().addListener((obs, ov, nv) -> {
+            if (nv != null) txtValueSearch.setText(String.valueOf(nv.intValue()));
+        });
+        txtValueSearch.textProperty().addListener((obs, o, n) -> {
+            if (n == null || n.isBlank()) return;
+            if (!n.matches("\\d+")) return;
+
+            int v = Integer.parseInt(n);
+            int min = (int) sliderParaSearch.getMin();
+            int max = (int) sliderParaSearch.getMax();
+            if (v < min) v = min;
+            if (v > max) v = max;
+
+            if ((int) sliderParaSearch.getValue() != v) sliderParaSearch.setValue(v);
+        });
+
+        // tabla
+        colValueSearch.setCellValueFactory(new PropertyValueFactory<>("value"));
+        colIndexSearch.setCellValueFactory(new PropertyValueFactory<>("index"));
+        colAttemptsSearch.setCellValueFactory(new PropertyValueFactory<>("attempts"));
+        colMaxAttemptsSearch.setCellValueFactory(new PropertyValueFactory<>("maxAttempts"));
+        tableResultsSearch.setItems(randomSearchResults);
+
+        // botones
+        btnGenerateSearch.setOnAction(e -> genArray());
+        btnRandomSearchSearch.setOnAction(e -> doSearch());
+        btnCleanSearch.setOnAction(e -> clearSearch());
+
+        // NO generar al abrir el tab
+        clearCanvasSearch();
+        arrayTextSearch.setText("");
+        txtMaxAttemptsSearch.setText("");
+    }
+
+    private void genArray() {
+        int n = 64;
+        int min = 0, max = 99;
+
+        randomArraySearch = new int[n];
+        for (int i = 0; i < n; i++) {
+            randomArraySearch[i] = min + random.nextInt(max - min + 1);
+        }
+
+        arrayTextSearch.setText(previewArray(randomArraySearch) + "   (n=" + randomArraySearch.length + ")");
+
+        // muestra primeros 12
+        draw(0, -1, "", 0, 0);
+    }
+
+    private void doSearch() {
+        if (randomArraySearch == null || randomArraySearch.length == 0) {
+            showAlert("Error", "Primero presione: Generar Aleatorio.");
+            return;
+        }
+
+        int value, maxAtt;
+        try {
+            value = Integer.parseInt(txtValueSearch.getText().trim());
+            maxAtt = Integer.parseInt(txtMaxAttemptsSearch.getText().trim());
+            if (maxAtt <= 0) {
+                showAlert("Error", "Max Attempts debe ser mayor a 0.");
+                return;
+            }
+        } catch (Exception e) {
+            showAlert("Error", "Valor y Max Attempts deben ser números enteros.");
+            return;
+        }
+
+        Probabilistic p = new Probabilistic();
+        int[] r = p.randomSearch(randomArraySearch, value, maxAtt);
+
+        int idx = r[0];
+        int att = r[1];
+        boolean ok = idx != -1;
+
+        // log
+        String log = "Item[" + value + "] " +
+                (ok
+                        ? "found in index: " + idx + ". Attempts: " + att + "  ✓"
+                        : "not found. Max attempts: " + maxAtt + "  ✗");
+        listViewOperationsSearch.getItems().add(log);
+
+        // tabla
+        randomSearchResults.add(new RandomSearchResult(value, idx, att, maxAtt));
+
+        // mensaje
+        String msg = ok
+                ? "¡VALOR ENCONTRADO EN EL ÍNDICE " + idx + "!"
+                : "VALOR NO ENCONTRADO (Intentos agotados)";
+
+        // dibujar 12 cerca del encontrado
+        int start = ok ? startOf(idx) : 0;
+        draw(start, idx, msg, att, maxAtt);
+    }
+
+    private void clearSearch() {
+        txtValueSearch.clear();
+        txtMaxAttemptsSearch.clear();
+        listViewOperationsSearch.getItems().clear();
+        randomSearchResults.clear();
+        clearCanvasSearch();
+        arrayTextSearch.setText("");
+        randomArraySearch = new int[0];
+    }
+
+    private int startOf(int idx) {
+        int n = randomArraySearch.length;
+        if (n <= VISIBLE) return 0;
+
+        int s = idx - (VISIBLE / 2);
+        if (s < 0) s = 0;
+
+        int maxS = n - VISIBLE;
+        if (s > maxS) s = maxS;
+
+        return s;
+    }
+
+    private void draw(int start, int highlight, String msg, int att, int maxAtt) {
+        GraphicsContext gc = canvasSearch.getGraphicsContext2D();
+
+        // fondo
+        gc.setFill(Color.web("#f2f2f2"));
+        gc.fillRect(0, 0, canvasSearch.getWidth(), canvasSearch.getHeight());
+
+        if (randomArraySearch == null || randomArraySearch.length == 0) return;
+
+        // textos
+        gc.setFont(Font.font(14));
+        gc.setFill(Color.BLACK);
+
+        String vtxt = (txtValueSearch.getText() == null) ? "" : txtValueSearch.getText().trim();
+        if (!vtxt.isBlank()) {
+            gc.fillText("Buscando valor: " + vtxt, 60, 35);
+            if (maxAtt > 0) gc.fillText("Intentos realizados: " + att + " / " + maxAtt, 60, 55);
+        }
+
+        if (msg != null && !msg.isBlank()) {
+            gc.setFill(highlight >= 0 ? Color.web("#0a8f08") : Color.web("#d10000"));
+            gc.fillText(msg, 60, 80);
+        }
+
+        // cajas
+        double x0 = 30, y0 = 110, w = 55, h = 45, gap = 6;
+
+        int win = Math.min(VISIBLE, randomArraySearch.length);
+        int s = Math.max(0, Math.min(start, Math.max(0, randomArraySearch.length - win)));
+
+        gc.setFont(Font.font(13));
+
+        for (int k = 0; k < win; k++) {
+            int i = s + k;
+            double x = x0 + k * (w + gap);
+
+            boolean hi = (i == highlight);
+
+            gc.setFill(hi ? Color.web("#8ef28e") : Color.WHITE);
+            gc.fillRect(x, y0, w, h);
+
+            gc.setStroke(Color.web("#444"));
+            gc.setLineWidth(1.2);
+            gc.strokeRect(x, y0, w, h);
+
+            gc.setFill(Color.BLACK);
+            gc.fillText(String.valueOf(randomArraySearch[i]), x + 18, y0 + 28);
+
+            gc.setFill(Color.web("#777"));
+            gc.fillText("[" + i + "]", x + 14, y0 + 70);
+        }
+    }
+
+    private void clearCanvasSearch() {
+        GraphicsContext gc = canvasSearch.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvasSearch.getWidth(), canvasSearch.getHeight());
+    }
+
+    private String previewArray(int[] arr) {
+        if (arr == null) return "[]";
+        if (arr.length <= 20) return java.util.Arrays.toString(arr);
+
+        StringBuilder sb = new StringBuilder("[");
+        int left = Math.min(12, arr.length);
+        for (int i = 0; i < left; i++) {
+            sb.append(arr[i]);
+            if (i < left - 1) sb.append(", ");
+        }
+        sb.append(", ...]");
+        return sb.toString();
     }
 
 
