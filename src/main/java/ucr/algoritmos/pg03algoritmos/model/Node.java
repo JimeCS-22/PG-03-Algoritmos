@@ -6,6 +6,7 @@ public class Node<T> {
 
     public T data;
     public Node<T> next; //apuntador al nodo siguiente
+    public Node<T> prev;
 
     public Node(T data, Node<T> next) {
         this.data = data;
