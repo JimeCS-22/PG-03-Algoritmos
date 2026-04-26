@@ -1,14 +1,19 @@
 package ucr.algoritmos.pg03algoritmos.controller;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import ucr.algoritmos.pg03algoritmos.model.LinkedList;
 import ucr.algoritmos.pg03algoritmos.model.MillerRabinResult;
+import ucr.algoritmos.pg03algoritmos.model.Node;
+import ucr.algoritmos.pg03algoritmos.model.Node.*;
 import ucr.algoritmos.pg03algoritmos.model.Probabilistic;
 import ucr.algoritmos.pg03algoritmos.util.BigIntegerSpinnerValueFactory;
 
@@ -35,11 +40,99 @@ public class MainController {
     @FXML private TableColumn<MillerRabinResult, String> colNumber;
     @FXML private TableColumn<MillerRabinResult, String> colResult;
 
+
+    //atributos Tab Random Search and List
+    @FXML
+    private TextField ArrayText;
+
+    @FXML
+    private Button btnAgregarFinal;
+
+    @FXML
+    private Button btnAgregarInicio;
+
+
+    @FXML
+    private Button btnClearList;
+
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private Button btnGenerate;
+
+    @FXML
+    private Button btnRandomSearch;
+
+    @FXML
+    private TableColumn<?, ?> colAttempts;
+    @FXML
+    private TableColumn<?, ?> colIndex;
+    @FXML
+    private TableColumn<?, ?> colMaxAttempts;
+
+    @FXML
+    private Button btnSearch;
+    @FXML
+    private Canvas canvasListDraw;
+    @FXML
+    private TableView<NodeInfo> tableLinkedList;
+    @FXML
+    private TableColumn<NodeInfo, String> colInsert;
+    @FXML
+    private TableColumn<NodeInfo, String> colValue;
+    @FXML
+    private TableColumn<NodeInfo, String> colPosition;
+
+    @FXML
+    private ListView<String> listViewOperationsList;
+
+    @FXML
+    private ListView<?> listViewOperationsRandom;
+
+    @FXML
+    private TabPane mainTabs;
+
+    @FXML
+    private Slider sliderPara;
+
+
+
+    @FXML
+    private TableView<?> tableResults1;
+
+    @FXML
+    private TextField textFieldValue;
+
+    @FXML
+    private TextArea txAreaNodeStructure;
+
+    @FXML
+    private Label txFieldNodeRepre;
+
+    @FXML
+    private Label txtInsertadoIn;
+
+    @FXML
+    private TextField txtMaxAttempts;
+
+    @FXML
+    private TextField txtValue;
     private final SecureRandom random = new SecureRandom();
+
+    //atributos para Linked List
+    private LinkedList<String> list = new LinkedList<>();
+    private ObservableList<NodeInfo> dataTable = FXCollections.observableArrayList();
+    private int contadorPosicion = 0; // atributo en tu Controller
 
     @FXML
     public void initialize() {
+        setupMillerRabin();
+        setupLinkedListTab();
+        setupRandomSearch();
+    }
 
+    private void setupMillerRabin() {
         spParams.setValueFactory(
                 new BigIntegerSpinnerValueFactory(min, max, initial, step)
         );
@@ -51,14 +144,14 @@ public class MainController {
         });
 
         txfBigInteger.textProperty().addListener((obs, oldVal, newVal) -> {
-            clearCanvas();
+            clearCanvasMiller();
         });
 
         colNumber.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getNumber()));
+                new SimpleStringProperty(data.getValue().getNumber()));
 
         colResult.setCellValueFactory(data ->
-                new javafx.beans.property.SimpleStringProperty(data.getValue().getResult()));
+                new SimpleStringProperty(data.getValue().getResult()));
 
         colResult.setCellFactory(column -> new TableCell<>() {
             @Override
@@ -137,7 +230,7 @@ public class MainController {
 
         GraphicsContext gc = canvasBin.getGraphicsContext2D();
 
-        clearCanvas();
+        clearCanvasMiller();
 
         double size = 120;
 
@@ -162,7 +255,7 @@ public class MainController {
         gc.fillText(text, textX, textY);
     }
 
-    private void clearCanvas() {
+    private void clearCanvasMiller() {
         GraphicsContext gc = canvasBin.getGraphicsContext2D();
         gc.clearRect(0, 0, canvasBin.getWidth(), canvasBin.getHeight());
     }
@@ -176,7 +269,7 @@ public class MainController {
     private void reset() {
         listViewOperations.getItems().clear();
         tableResults.getItems().clear();
-        clearCanvas();
+        clearCanvasMiller();
     }
 
     private void showAlert(String title, String message) {
@@ -186,4 +279,160 @@ public class MainController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    //Methods Controller for Random Search @Alexander
+
+    private void setupRandomSearch() {
+        //config objetos
+//        btnAgregarInicio.setOnAction(e -> addFirst());
+//        btnAgregarFinal.setOnAction(e -> addLast());
+//        btnSearch.setOnAction(e -> runSearchInLinkedList());
+//        btnDelete.setOnAction(e -> cleanListTab());
+//        btnClearList.setOnAction(e -> runSearchInLinkedList());
+    }
+
+
+
+
+
+    //Methods Controller for Linked List - Camila
+
+    private void setupLinkedListTab() {
+        colPosition.setCellValueFactory(new PropertyValueFactory<>("posicion"));
+        colValue.setCellValueFactory(new PropertyValueFactory<>("valor"));
+        colInsert.setCellValueFactory(new PropertyValueFactory<>("referencia"));
+        tableLinkedList.setItems(dataTable);
+        //config botones de operaciones
+        btnAgregarInicio.setOnAction(e -> addFirst());
+        btnAgregarFinal.setOnAction(e -> addLast());
+        btnSearch.setOnAction(e -> runSearchInLinkedList());
+        btnDelete.setOnAction(e -> remove());
+        btnClearList.setOnAction(e -> cleanListTab());
+
+    }
+
+
+    private void addFirst() {
+        String input = textFieldValue.getText().trim();
+
+        if (input.isEmpty()) {
+            showAlert("Error", "Debe ingresar un valor");
+            return;
+        }
+
+        try {
+            list.addFirst(input);
+            String result = list.toString();
+            //mostrar la Representación de la lista
+            txFieldNodeRepre.setText(result);
+
+           // colocar el registro de operaciones
+            ObservableList<String> itemsResult = FXCollections.observableArrayList(result);
+            listViewOperationsList.setItems(itemsResult);
+
+            //llenado tabla
+            // agregar fila a la tabla
+            contadorPosicion++;
+            int posicion = list.indexOf(input); //String.valueOf(posicion)
+
+            dataTable.add(new NodeInfo(String.valueOf(contadorPosicion), input, "Inicio"));
+
+
+            drawLinkedList(input);//dibujar la acción de addFirst en el Canvas
+
+        } catch (Exception e) {
+            showAlert("Error", "Valor inválido");
+        }
+
+    }
+
+    private void addLast() {
+
+            String input = textFieldValue.getText().trim();
+
+            if (input.isEmpty()) {
+                showAlert("Error", "Debe ingresar un valor");
+                return;
+            }
+
+            try {
+                list.addLast(input);
+                txFieldNodeRepre.setText(list.toString());
+
+                ObservableList<String> itemsResult = FXCollections.observableArrayList(list.toString());
+                listViewOperationsList.setItems(itemsResult);
+
+                contadorPosicion++;
+                dataTable.add(new NodeInfo(
+                        String.valueOf(contadorPosicion),
+                        input,
+                        "Final"
+                ));
+
+                drawLinkedList(input);
+
+            } catch (Exception e) {
+                showAlert("Error", "Valor inválido");
+            }
+
+    }
+
+    private void runSearchInLinkedList() {
+
+    }
+
+    private void remove() {
+
+    }
+    private void cleanListTab() {
+        txFieldNodeRepre.setText("");
+        txtInsertadoIn.setText("");
+        textFieldValue.setText("");
+        listViewOperationsList.getItems().clear();
+        tableLinkedList.getItems().clear();
+        clearCanvasList();
+    }
+
+    private void clearCanvasList() {
+        GraphicsContext gc = canvasListDraw.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvasListDraw.getWidth(), canvasListDraw.getHeight());
+    }
+
+    private void drawLinkedList(String input) {
+
+    }
+    private void runLinkedList() {
+
+        String input = textFieldValue.getText().trim();
+
+        if (input.isEmpty()) {
+            showAlert("Error", "Debe ingresar un valor");
+            return;
+        }
+
+        try {
+//            LinkedList<String> list = new LinkedList<>();
+//            String result = list.add(input);
+//
+//            boolean isPrime = result.contains("probably prime");
+//
+//            ObservableList<String> items = FXCollections.observableArrayList(listViewOperations.getItems());
+//            items.add(input + " → " + (isPrime ? "✔ Primo" : "✘ No primo"));
+//            tableLinkedList.setItems(items);
+//
+//            tableResults.getItems().add(
+//                    new MillerRabinResult(
+//                            input,
+//                            isPrime ? "Probablemente Primo" : "No Primo"
+//                    )
+//            );
+//
+//            drawCircle(input, isPrime);
+
+        } catch (Exception e) {
+            showAlert("Error", "Valor inválido");
+        }
+    }
+
+
 }

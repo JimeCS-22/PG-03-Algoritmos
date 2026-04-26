@@ -264,15 +264,15 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("HEAD ➡️");
+        StringBuilder sb = new StringBuilder("HEAD →");//➡️
         Node<T> aux = head;
 
         while (aux != null) {
             sb.append("[").append(aux.data).append("]");
-            if (aux.next != null) sb.append("➡️");
+            if (aux.next != null) sb.append("→");
             aux = aux.next;
         }
-        sb.append("➡️ NULL ");
+        sb.append("→ NULL ");
         return sb.toString();
     }
 
