@@ -21,6 +21,22 @@ public class Node<T> {
         this.next = null;
     }
 
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public Node<T> getNext() {
+        return next;
+    }
+
+    public void setNext(Node<T> next) {
+        this.next = next;
+    }
+
     //esta clase es para llenar de una mejor manera la tabla de Linked List
     public static class NodeInfo {
         private final String posicion;

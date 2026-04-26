@@ -331,18 +331,20 @@ public class MainController {
             String result = list.toString();
             //mostrar la Representación de la lista
             txFieldNodeRepre.setText(result);
-            txtInsertadoIn.setText("al inicio: "+input );
-           // colocar el registro de operaciones
-            ObservableList<String> itemsResult = FXCollections.observableArrayList(result);
+            txtInsertadoIn.setText("al inicio: " + input);
+            // colocar el registro de operaciones
+            ObservableList<String> itemsResult = FXCollections.observableArrayList("addFirst ("+input+")" +result);
+
             listViewOperationsList.setItems(itemsResult);
 
             //llenado tabla
             // agregar fila a la tabla
             contadorPosicion++;
             int posicion = list.indexOf(input); //String.valueOf(posicion)
-
-            dataTable.add(new NodeInfo(String.valueOf(contadorPosicion), input, "Inicio"));
-
+            if (posicion != -1){
+                dataTable.add(new NodeInfo(String.valueOf(posicion), input, "Inicio"));
+                posicion++;
+            }
 
             drawLinkedList(input);//dibujar la acción de addFirst en el Canvas
 
@@ -363,14 +365,19 @@ public class MainController {
 
             try {
                 list.addLast(input);
+
+                String result = list.toString();
+
                 txFieldNodeRepre.setText(list.toString());
                 txtInsertadoIn.setText("al final: "+input );
                 ObservableList<String> itemsResult = FXCollections.observableArrayList(list.toString());
+                itemsResult.add("addLast" +"("+input+")" +result );
                 listViewOperationsList.setItems(itemsResult);
 
                 contadorPosicion++;
+                int posicion = list.indexOf(input); //String.valueOf(posicion)
                 dataTable.add(new NodeInfo(
-                        String.valueOf(contadorPosicion),
+                        String.valueOf(posicion),
                         input,
                         "Final"
                 ));
@@ -384,6 +391,47 @@ public class MainController {
     }
 
     private void runSearchInLinkedList() {
+
+        String input = textFieldValue.getText().trim();
+
+        // Validación
+        if (input.isEmpty()) {
+            showAlert("Error", "Debe ingresar un valor a buscar");
+            return;
+        }
+
+        try {
+            // Buscar en la lista enlazada
+            int posicion = list.indexOf(input);
+
+            if (posicion == -1) {
+                // Valor NO encontrado
+                txtInsertadoIn.setText("El valor \"" + input + "\" no se encuentra en la lista");
+                showAlert("Resultado de búsqueda",
+                        "El valor \"" + input + "\" no se encuentra en la lista");
+
+                // registrar operación
+                listViewOperationsList.getItems().add(
+                        "search(" + input + ") → NO ENCONTRADO"
+                );
+            } else {
+                // Valor encontrado
+                txtInsertadoIn.setText("El valor \"" + input + "\" fue encontrado en la posición: " + posicion);
+                showAlert("Resultado de búsqueda",
+                        "El valor \"" + input + "\" fue encontrado en la posición: " + posicion);
+
+                // registrar operación
+                listViewOperationsList.getItems().add(
+                        "search(" + input + ") → encontrado en posición " + posicion
+                );
+
+                // redibujar lista (TO DO  resaltar el nodo)
+                drawLinkedList(input);
+            }
+
+        } catch (Exception e) {
+            showAlert("Error", "Error al buscar el valor");
+        }
 
     }
 
@@ -433,7 +481,71 @@ public class MainController {
 
     private void drawLinkedList(String input) {
 
+        GraphicsContext gc = canvasListDraw.getGraphicsContext2D();
+        clearCanvasList();
+
+        // Configuración visual
+        double startX = 50;
+        double startY = canvasListDraw.getHeight() / 2;
+        double nodeWidth = 60;
+        double nodeHeight = 40;
+        double spacing = 30;
+
+        // Colores
+        Color nodeColor = Color.web("#1f2a44");
+        Color arrowColor = Color.web("#f5a623");
+
+        gc.setFont(Font.font(14));
+
+        // Dibujar HEAD
+        gc.setFill(Color.BLACK);
+        gc.fillText("HEAD", startX - 35, startY + 5);
+
+        double currentX = startX;
+        Node<String> current = list.getHead();
+
+        // Recorrer la lista enlazada
+        while (current != null) {
+
+            // Nodo (rectángulo)
+            gc.setFill(nodeColor);
+            gc.fillRect(currentX, startY - nodeHeight / 2, nodeWidth, nodeHeight);
+
+            // Borde
+            gc.setStroke(Color.BLACK);
+            gc.strokeRect(currentX, startY - nodeHeight / 2, nodeWidth, nodeHeight);
+
+            // Valor del nodo
+            gc.setFill(Color.WHITE);
+            gc.fillText(
+                    current.getData(),
+                    currentX + 15,
+                    startY + 5
+            );
+
+            // Flecha al siguiente nodo
+            if (current.getNext() != null) {
+                double arrowStartX = currentX + nodeWidth;
+                double arrowEndX = currentX + nodeWidth + spacing;
+
+                gc.setStroke(arrowColor);
+                gc.setLineWidth(2);
+                gc.strokeLine(arrowStartX, startY, arrowEndX, startY);
+
+                // Punta de la flecha
+                gc.strokeLine(arrowEndX - 5, startY - 5, arrowEndX, startY);
+                gc.strokeLine(arrowEndX - 5, startY + 5, arrowEndX, startY);
+            }
+
+            currentX += nodeWidth + spacing;
+            current = current.getNext();
+        }
+
+        // Dibujar NULL
+        gc.setFill(Color.BLACK);
+        gc.fillText("NULL", currentX + 10, startY + 5);
     }
+
     private void runLinkedList() {
 
         String input = textFieldValue.getText().trim();
