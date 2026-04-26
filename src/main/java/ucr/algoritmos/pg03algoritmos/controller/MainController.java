@@ -29,7 +29,7 @@ public class MainController {
     BigInteger initial = new BigInteger("1000000000000");
     BigInteger step = new BigInteger("1");
 
-    @FXML private Canvas canvasBin;
+    @FXML private Canvas canvasMiller;
     @FXML private Button btnMillerRabin;
     @FXML private TextField txfBigInteger;
     @FXML private Button btnClean;
@@ -121,9 +121,9 @@ public class MainController {
     private final SecureRandom random = new SecureRandom();
 
     //atributos para Linked List
-    private LinkedList<String> list = new LinkedList<>();
-    private ObservableList<NodeInfo> dataTable = FXCollections.observableArrayList();
-    private int contadorPosicion = 0; // atributo en tu Controller
+    private LinkedList<String> list;
+    private ObservableList<NodeInfo> dataTable;
+    private int contadorPosicion; // atributo en tu Controller
 
     @FXML
     public void initialize() {
@@ -228,14 +228,14 @@ public class MainController {
 
     private void drawCircle(String number, boolean isPrime) {
 
-        GraphicsContext gc = canvasBin.getGraphicsContext2D();
+        GraphicsContext gc = canvasMiller.getGraphicsContext2D();
 
         clearCanvasMiller();
 
         double size = 120;
 
-        double x = (canvasBin.getWidth() - size) / 2;
-        double y = (canvasBin.getHeight() - size) / 2;
+        double x = (canvasMiller.getWidth() - size) / 2;
+        double y = (canvasMiller.getHeight() - size) / 2;
 
         gc.setFill(isPrime ? Color.LIMEGREEN : Color.RED);
         gc.fillOval(x, y, size, size);
@@ -256,8 +256,8 @@ public class MainController {
     }
 
     private void clearCanvasMiller() {
-        GraphicsContext gc = canvasBin.getGraphicsContext2D();
-        gc.clearRect(0, 0, canvasBin.getWidth(), canvasBin.getHeight());
+        GraphicsContext gc = canvasMiller.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvasMiller.getWidth(), canvasMiller.getHeight());
     }
 
     @FXML
@@ -298,6 +298,11 @@ public class MainController {
     //Methods Controller for Linked List - Camila
 
     private void setupLinkedListTab() {
+        //atributos para Linked List
+         list = new LinkedList<>();
+         dataTable = FXCollections.observableArrayList();
+         contadorPosicion = 0; // atributo en tu Controller
+
         colPosition.setCellValueFactory(new PropertyValueFactory<>("posicion"));
         colValue.setCellValueFactory(new PropertyValueFactory<>("valor"));
         colInsert.setCellValueFactory(new PropertyValueFactory<>("referencia"));
@@ -313,6 +318,7 @@ public class MainController {
 
 
     private void addFirst() {
+
         String input = textFieldValue.getText().trim();
 
         if (input.isEmpty()) {
@@ -325,7 +331,7 @@ public class MainController {
             String result = list.toString();
             //mostrar la Representación de la lista
             txFieldNodeRepre.setText(result);
-
+            txtInsertadoIn.setText("al inicio: "+input );
            // colocar el registro de operaciones
             ObservableList<String> itemsResult = FXCollections.observableArrayList(result);
             listViewOperationsList.setItems(itemsResult);
@@ -358,7 +364,7 @@ public class MainController {
             try {
                 list.addLast(input);
                 txFieldNodeRepre.setText(list.toString());
-
+                txtInsertadoIn.setText("al final: "+input );
                 ObservableList<String> itemsResult = FXCollections.observableArrayList(list.toString());
                 listViewOperationsList.setItems(itemsResult);
 
@@ -382,9 +388,36 @@ public class MainController {
     }
 
     private void remove() {
+        String input = textFieldValue.getText().trim();
 
+        if (input.isEmpty()) {
+            showAlert("Error", "Debe ingresar un valor");
+            return;
+        }
+
+        try {
+            list.remove(input);
+            String result = list.toString();
+            //mostrar la Representación de la lista
+            txFieldNodeRepre.setText(result);
+
+            // colocar el registro de operaciones
+            ObservableList<String> itemsResult = FXCollections.observableArrayList(result);
+            listViewOperationsList.setItems(itemsResult);
+
+            //llenado tabla
+            // agregar fila a la tabla
+            contadorPosicion++;
+            dataTable.removeIf(n -> n.getValor().equals(input));
+
+            drawLinkedList(input);//dibujar la acción de addFirst en el Canvas
+
+        } catch (Exception e) {
+            showAlert("Error", "Valor inválido");
+        }
     }
     private void cleanListTab() {
+        list.clear();
         txFieldNodeRepre.setText("");
         txtInsertadoIn.setText("");
         textFieldValue.setText("");

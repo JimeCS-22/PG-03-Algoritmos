@@ -62,7 +62,7 @@
                                             <font>
                                                 <Font size="10.0" />
                                             </font></Label>
-                                        <Canvas fx:id="canvasBin" height="291.0" width="548.0" />
+                                        <Canvas fx:id="canvasMiller" height="291.0" width="548.0" />
                                         <HBox prefHeight="100.0" prefWidth="200.0">
                                             <children>
                                                 <HBox prefHeight="100.0" prefWidth="690.0">
@@ -133,7 +133,7 @@
                                  </font>
                               </Label>
                               <TextField fx:id="ArrayText" editable="false" styleClass="amber-card" />
-                              <Canvas fx:id="canvasBin" height="222.0" width="548.0" />
+                              <Canvas fx:id="canvasSearch" height="222.0" width="548.0" />
                               <HBox prefHeight="100.0" prefWidth="200.0">
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="690.0">
@@ -221,16 +221,16 @@
                               </VBox>
                               <HBox prefHeight="35.0" prefWidth="548.0">
                                  <children>
-                                    <Label text="Insertado :" />
+                                    <Label text="Insertado " />
                                     <Label fx:id="txtInsertadoIn" text="..." />
                                  </children>
                               </HBox>
                               <Label styleClass="axis-label" text="Contenido de la Lista Enlazada Simple" />
-                              <TableView fx:id="tableLinkedList" prefHeight="211.0" prefWidth="548.0">
+                              <TableView fx:id="tableLinkedList" prefHeight="211.0" prefWidth="548.0" styleClass="custom-table" stylesheets="@styles.css">
                                  <columns>
                                     <TableColumn fx:id="colPosition" prefWidth="93.0" text="Posición" />
                                     <TableColumn fx:id="colValue" prefWidth="102.0" text="Elemento" />
-                                    <TableColumn fx:id="colInsert" prefWidth="120.0" text="Se inserto al" />
+                                    <TableColumn fx:id="colInsert" prefWidth="120.0" text="Se insertó al" />
                                  </columns>
                               </TableView>
                            </children>
@@ -247,6 +247,7 @@
                                     </HBox>
                                  </children>
                               </HBox>
+                              <Label prefHeight="18.0" prefWidth="104.0" styleClass="axis-label" text="Operaciones" textAlignment="CENTER" />
                               <HBox prefHeight="35.0" prefWidth="316.0" spacing="10.0">
                                  <children>
                                     <Button fx:id="btnAgregarInicio" mnemonicParsing="false" styleClass="btn-primary" text="← Agregar inicio" />
@@ -258,8 +259,8 @@
                                     <HBox prefHeight="17.0" prefWidth="419.0" spacing="10.0">
                                        <children>
                                           <Button fx:id="btnSearch" mnemonicParsing="false" styleClass="btn-primary" text="🔍Buscar" />
-                                          <Button fx:id="btnDelete" mnemonicParsing="false" styleClass="btn-accent" text="Eliminar" />
-                                          <Button fx:id="btnClearList" mnemonicParsing="false" styleClass="btn-ghost" text="Limpiar Todo" />
+                                          <Button fx:id="btnDelete" mnemonicParsing="false" styleClass="btn-accent" text="🗑Eliminar" />
+                                          <Button fx:id="btnClearList" mnemonicParsing="false" styleClass="btn-ghost" text="↻ Limpiar Todo" />
                                        </children>
                                     </HBox>
                                  </children>
