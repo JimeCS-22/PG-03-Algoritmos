@@ -277,20 +277,13 @@ public class MainController {
             //mostrar la Representación de la lista
             txFieldNodeRepre.setText(result);
             txtInsertadoIn.setText("al inicio: " + input);
+
             // colocar el registro de operaciones
-            ObservableList<String> itemsResult = FXCollections.observableArrayList("addFirst ("+input+")" +result);
-
-            listViewOperationsList.setItems(itemsResult);
-
+            registrarOperacion("addFirst", input, "HEAD → [" + input + "] → ...");
             //llenado tabla
+            desplazarPosiciones();
             // agregar fila a la tabla
-            contadorPosicion++;
-            int posicion = list.indexOf(input); //String.valueOf(posicion)
-            if (posicion != -1){
-                dataTable.add(new NodeInfo(String.valueOf(posicion), input, "Inicio"));
-                posicion++;
-            }
-
+            dataTable.add(0, new NodeInfo("1", input, "Inicio"));
             drawLinkedList(input);//dibujar la acción de addFirst en el Canvas
 
         } catch (Exception e) {
@@ -310,14 +303,10 @@ public class MainController {
 
             try {
                 list.addLast(input);
-
-                String result = list.toString();
-
                 txFieldNodeRepre.setText(list.toString());
                 txtInsertadoIn.setText("al final: "+input );
-                ObservableList<String> itemsResult = FXCollections.observableArrayList(list.toString());
-                itemsResult.add("addLast" +"("+input+")" +result );
-                listViewOperationsList.setItems(itemsResult);
+
+                registrarOperacion("addLast", input, "... → [" + input + "] → NULL");
 
                 contadorPosicion++;
                 int posicion = list.indexOf(input); //String.valueOf(posicion)
@@ -395,8 +384,7 @@ public class MainController {
             txFieldNodeRepre.setText(result);
 
             // colocar el registro de operaciones
-            ObservableList<String> itemsResult = FXCollections.observableArrayList(result);
-            listViewOperationsList.setItems(itemsResult);
+            registrarOperacion("remove",input, "Nodo eliminado");
 
             //llenado tabla
             // agregar fila a la tabla
@@ -491,38 +479,18 @@ public class MainController {
         gc.fillText("NULL", currentX + 10, startY + 5);
     }
 
-    private void runLinkedList() {
 
-        String input = textFieldValue.getText().trim();
-
-        if (input.isEmpty()) {
-            showAlert("Error", "Debe ingresar un valor");
-            return;
-        }
-
-        try {
-//            LinkedList<String> list = new LinkedList<>();
-//            String result = list.add(input);
-//
-//            boolean isPrime = result.contains("probably prime");
-//
-//            ObservableList<String> items = FXCollections.observableArrayList(listViewOperations.getItems());
-//            items.add(input + " → " + (isPrime ? "✔ Primo" : "✘ No primo"));
-//            tableLinkedList.setItems(items);
-//
-//            tableResults.getItems().add(
-//                    new MillerRabinResult(
-//                            input,
-//                            isPrime ? "Probablemente Primo" : "No Primo"
-//                    )
-//            );
-//
-//            drawCircle(input, isPrime);
-
-        } catch (Exception e) {
-            showAlert("Error", "Valor inválido");
+    private void registrarOperacion(String operacion, String valor, String representacion) {
+        String texto = operacion + "(" + valor + ")  " + representacion;
+        listViewOperationsList.getItems().add(texto);
+    }
+    private void desplazarPosiciones() {
+        for (NodeInfo info : dataTable) {
+            int pos = Integer.parseInt(info.getPosicion());
+            info.setPosicion(String.valueOf(pos + 1));
         }
     }
+
 
     // =======================
 // TAB: Random Search
