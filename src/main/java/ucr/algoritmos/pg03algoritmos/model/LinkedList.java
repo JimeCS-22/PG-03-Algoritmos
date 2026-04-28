@@ -105,21 +105,36 @@ public class LinkedList<T> implements List<T> {
         if (isEmpty())
             throw new ListException("Linked List is empty");
 
-        // Caso 1: Está en el head
+        // Caso 1: Cuando el elemento a suprimir es el primero en la listaq
         if (equals(head.data, element)) {
             head = head.next;
-            if (head == null) tail = null; // Si la lista se vacía, tail también
-        } else {
+        }
+        //Caso general: El elemento a suprimir puede estar en el medio o al final
+        else {
             Node<T> prev = head;
-            Node<T> aux = head.next;
-            while (aux != null && !(equals(aux.data, element))) {
-                prev = aux;
-                aux = aux.next;
+            while (prev != null && !(equals(prev.data, element))) {
+
+                if (equals(prev.next.data, element)) {
+
+                    //Ya encontre el elemnto a eliminar
+                    Node<T> removed = prev.next;
+
+                    //Desenlazo el nodo
+                    prev.next = removed.next;//Se brinca el nodo a suprimir
+
+                    return;
+
+                }
+
+                prev = prev.next;
+
             }
-            if (aux != null && equals(aux.data, element)) {
-                prev.next = aux.next;
-                if (aux == tail) tail = prev; // Si era el último
-            }
+
+            //Al final dejamos tail en el ultimo nodo
+            //  Si la lista queda vacia, se asigna nulo
+            tail = head != null ? getNodeByIndex(indexOf(getLast())) : null;
+
+
         }
     }
 
@@ -276,6 +291,7 @@ public class LinkedList<T> implements List<T> {
         return sb.toString();
     }
 
+
     /* ---- AYUDAS----- */
     private boolean equals(T a, T b) {
         return a == null ? b == null : a.equals(b);
@@ -303,6 +319,19 @@ public class LinkedList<T> implements List<T> {
         while (aux != null) {
             if (equals(aux.data, element)) return aux;
             aux = aux.next;
+        }
+        return null;
+    }
+
+    private Node<T> getNodeByIndex(int index) throws ListException {
+        if (isEmpty())
+            throw new ListException("Linked List is empty");
+        Node<T> aux = head;
+        int pos = 1;//la posicion del primer nodo
+        while (aux != null) {
+            if (pos == index) return aux;
+            aux = aux.next;
+            pos++;
         }
         return null;
     }
