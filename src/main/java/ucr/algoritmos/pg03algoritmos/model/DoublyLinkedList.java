@@ -12,17 +12,18 @@ public class DoublyLinkedList<T> implements List<T>{
 
     @Override
     public int size() throws ListException {
+        if(isEmpty()) throw new ListException("Doubly Linked List is empty");
         return 0;
     }
 
     @Override
     public void clear() {
-
+        this.head = null;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return head == null;
     }
 
     @Override
