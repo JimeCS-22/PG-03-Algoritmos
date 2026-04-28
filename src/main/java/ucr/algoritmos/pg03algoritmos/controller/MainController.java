@@ -83,6 +83,37 @@ public class MainController {
     BigInteger step = new BigInteger("1");
     private final SecureRandom random = new SecureRandom();
 
+    //Lista Doble enlazada
+    @FXML
+    private Button btnClearListDoble;
+    @FXML
+    private Label txtInsertadoIn1;
+    @FXML
+    private Button btnAgregarInicioDoble;
+    @FXML
+    private Button btnDeleteDoble;
+    @FXML
+    private Button btnAgregarFinalDole;
+    @FXML
+    private TableColumn colInsertDoubly;
+    @FXML
+    private TableColumn colValueDoubly;
+    @FXML
+    private TextArea txAreaNodeStructure1;
+    @FXML
+    private TextField textFieldValueDobly;
+    @FXML
+    private ListView listViewOperationsListDobly;
+    @FXML
+    private Button btnSearchDoble;
+    @FXML
+    private Canvas canvasListDoubly;
+    @FXML
+    private TableView tableLinkedList1;
+    @FXML
+    private Label txFieldNodeRepreDoubly;
+    @FXML
+    private TableColumn colPositionDoubly;
 
 
     @FXML

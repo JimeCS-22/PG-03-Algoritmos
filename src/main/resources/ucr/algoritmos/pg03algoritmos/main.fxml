@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1031.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.algoritmos.pg03algoritmos.controller.MainController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1031.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucr.algoritmos.pg03algoritmos.controller.MainController">
     <top>
         <VBox prefHeight="95.0" prefWidth="828.0" styleClass="header-bar" stylesheets="@styles.css" BorderPane.alignment="CENTER">
             <children>
@@ -288,6 +288,88 @@
                                  <children>
                                     <Label styleClass="info-title" text="Estructura del Nodo" />
                                     <TextArea fx:id="txAreaNodeStructure" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="info-box-dark" text="class Node&lt;T&gt; {&#10;     T data; // dato almacenado en el nodo&#10;      Node&lt;T&gt; next; //apuntador al siguiente nodo o a Null&#10;}&#10;" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </items>
+                  </SplitPane>
+               </content>
+            </Tab>
+            <Tab text="Doubly Linked List">
+               <content>
+                  <SplitPane dividerPositions="0.5615906886517944" prefHeight="200.0" prefWidth="200.0">
+                     <items>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="8.0" styleClass="panel">
+                           <children>
+                              <Label styleClass="panel-title" text="Lista enlazada doble: HEAD➡ ⬅ nodes⬅ ➡ NULL">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Label>
+                              <ScrollPane fitToHeight="true" fitToWidth="false" hbarPolicy="ALWAYS" pannable="true" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER">
+                                 <content>
+                                    <Canvas fx:id="canvasListDoubly" height="300" width="2000" />
+                                 </content>
+                              </ScrollPane>
+                              <VBox prefHeight="37.0" prefWidth="548.0" styleClass="info-box" stylesheets="@styles.css">
+                                 <children>
+                                    <Label styleClass="axis-label" text="Representación:" />
+                                    <Label fx:id="txFieldNodeRepreDoubly" text="..." />
+                                 </children>
+                              </VBox>
+                              <HBox prefHeight="35.0" prefWidth="548.0">
+                                 <children>
+                                    <Label text="Insertado " />
+                                    <Label fx:id="txtInsertadoIn1" text="..." />
+                                 </children>
+                              </HBox>
+                              <Label styleClass="axis-label" text="Contenido de la Lista Enlazada Doble" />
+                              <TableView fx:id="tableLinkedList1" prefHeight="211.0" prefWidth="548.0" styleClass="custom-table" stylesheets="@styles.css">
+                                 <columns>
+                                    <TableColumn fx:id="colPositionDoubly" prefWidth="93.0" text="Posición" />
+                                    <TableColumn fx:id="colValueDoubly" prefWidth="102.0" text="Elemento" />
+                                    <TableColumn fx:id="colInsertDoubly" prefWidth="118.0" text="Se insertó al" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="565.0" prefWidth="470.0" spacing="10.0" styleClass="panel">
+                           <children>
+                              <HBox prefHeight="32.0" prefWidth="481.0">
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label prefHeight="18.0" prefWidth="64.0" styleClass="param-label" text="Valor:" textAlignment="CENTER" />
+                                          <TextField fx:id="textFieldValueDobly" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <Label prefHeight="18.0" prefWidth="104.0" styleClass="axis-label" text="Operaciones" textAlignment="CENTER" />
+                              <HBox prefHeight="35.0" prefWidth="316.0" spacing="10.0">
+                                 <children>
+                                    <Button fx:id="btnAgregarInicioDoble" mnemonicParsing="false" styleClass="btn-primary" text="← Agregar inicio" />
+                                    <Button fx:id="btnAgregarFinalDole" mnemonicParsing="false" prefHeight="30.0" prefWidth="127.0" styleClass="btn-primary" text="Agregar final →" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="51.0" prefWidth="421.0" spacing="10.0">
+                                 <children>
+                                    <HBox prefHeight="17.0" prefWidth="419.0" spacing="10.0">
+                                       <children>
+                                          <Button fx:id="btnSearchDoble" mnemonicParsing="false" styleClass="btn-primary" text="🔍Buscar" />
+                                          <Button fx:id="btnDeleteDoble" mnemonicParsing="false" styleClass="btn-accent" text="🗑Eliminar" />
+                                          <Button fx:id="btnClearListDoble" mnemonicParsing="false" styleClass="btn-ghost" text="↻ Limpiar Todo" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <Label styleClass="param-label" text="Registro de Operaciones" />
+                              <ListView fx:id="listViewOperationsListDobly" prefHeight="151.0" prefWidth="419.0" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" styleClass="info-box">
+                                 <children>
+                                    <Label styleClass="info-title" text="Estructura del Nodo" />
+                                    <TextArea fx:id="txAreaNodeStructure1" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="info-box-dark" text="class Node&lt;T&gt; {&#10;     T data; // dato almacenado en el nodo&#10;      Node&lt;T&gt; next; //apuntador al siguiente nodo o a Null&#10;}&#10;" />
                                  </children>
                               </VBox>
                            </children>
