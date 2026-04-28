@@ -109,4 +109,9 @@ class LinkedListTest {
         System.out.println(linkedList);
     }
 
+    @Test
+    public void personLinkedListTest(){
+
+    }
+
 }
