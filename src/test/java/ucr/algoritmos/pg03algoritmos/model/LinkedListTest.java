@@ -111,7 +111,6 @@ class LinkedListTest {
 
     @Test
     public void personLinkedListTest(){
-
         LinkedList<Person> linkedList = new LinkedList<>();
         linkedList.add(new Student("1", "María", 19, 1.6, 56.5, "C12345"));
         linkedList.add(new Employee("2", "Carlos", 25, 1.73, 75, "Informático"));

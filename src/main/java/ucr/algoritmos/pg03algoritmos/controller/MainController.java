@@ -89,31 +89,51 @@ public class MainController {
     @FXML
     private Label txtInsertadoIn1;
     @FXML
-    private Button btnAgregarInicioDoble;
-    @FXML
-    private Button btnDeleteDoble;
-    @FXML
-    private Button btnAgregarFinalDole;
-    @FXML
-    private TableColumn colInsertDoubly;
-    @FXML
-    private TableColumn colValueDoubly;
-    @FXML
-    private TextArea txAreaNodeStructure1;
-    @FXML
-    private TextField textFieldValueDobly;
-    @FXML
-    private ListView listViewOperationsListDobly;
-    @FXML
     private Button btnSearchDoble;
     @FXML
     private Canvas canvasListDoubly;
     @FXML
-    private TableView tableLinkedList1;
-    @FXML
     private Label txFieldNodeRepreDoubly;
     @FXML
     private TableColumn colPositionDoubly;
+    @FXML
+    private Button btnEliminarInicio;
+    @FXML
+    private TextField txtName;
+    @FXML
+    private TextArea txAreaNodeStructureD;
+    @FXML
+    private Label txtInsertar;
+    @FXML
+    private TableColumn colPuesto;
+    @FXML
+    private Button btnAgregarDoble;
+    @FXML
+    private ListView listViewOperationsListDoubly;
+    @FXML
+    private TextField txtId;
+    @FXML
+    private Button btnUltimo;
+    @FXML
+    private Button btnAnterior;
+    @FXML
+    private TableView colID;
+    @FXML
+    private Button btnEliminarDoble;
+    @FXML
+    private TableColumn colNombre;
+    @FXML
+    private TableColumn colFechaIngreso;
+    @FXML
+    private ChoiceBox bxJobPosition;
+    @FXML
+    private Button btnEliminarFinal;
+    @FXML
+    private Button btnPrimero;
+    @FXML
+    private DatePicker dpHireDate;
+    @FXML
+    private Button btnSiguiente;
 
 
     @FXML

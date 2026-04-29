@@ -111,6 +111,12 @@
     -fx-font-weight: bold;
     -fx-text-fill: -ucr-blue;
 }
+/* ── texto titulo verde ─────────────────────────────────────────────────────────── */
+.title-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -ucr-teal;
+}
 .value-badge {
     -fx-background-color: -ucr-navy;
     -fx-text-fill: -ucr-amber;
@@ -148,6 +154,15 @@
 }
 .btn-accent {
     -fx-background-color: -ucr-teal;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+.btn-gray {
+    -fx-background-color: #808080; /* gris estándar */
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 12px;
