@@ -4,11 +4,12 @@ public class Node<T> {
 
     public T data;
     public Node<T> next; //apuntador al nodo siguiente
-    public Node<T> prev;
+    public Node<T> prev;//apuntador al nodo siguiente
 
     public Node(T data, Node<T> next) {
         this.data = data;
         this.next = null;//Por default que apunta a nulo
+        this.prev = null;
     }
 
     public Node(T data) {
