@@ -138,7 +138,7 @@ public class DoublyLinkedList<T> implements List<T>{
         }
         else {
                 Node<T> prev = head;
-                while (prev != null && !(equals(prev.data, element))) {
+                while (prev != null && prev.next != null) {
 
                     if (equals(prev.next.data, element)) {
 

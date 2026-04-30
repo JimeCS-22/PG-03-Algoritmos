@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class DoublyLinkedListTest {
     @Test
     void add() throws ListException {
@@ -16,97 +14,99 @@ class DoublyLinkedListTest {
         }
         System.out.println(listNumbers);
         //b. Pruebe los métodos: getFirst y getLast
-        System.out.println( "getFirst("+listNumbers.getFirst() + ")");
-        System.out.println( "getLast("+listNumbers.getLast() + ")");
+        System.out.println("getFirst(" + listNumbers.getFirst() + ")");
+        System.out.println("getLast(" + listNumbers.getLast() + ")");
 
     }
 
     @Test
-    void DoublyLinkedListTest() {
-        DoublyLinkedList<Integer> linkedList = new DoublyLinkedList<>();
-        linkedList.add(20);
-        linkedList.add(10);
-
+    public void doublyDoublyLinkedListTest() {
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
+        doublyLinkedList.add(20);
+        doublyLinkedList.add(10);
         for (int i = 0; i < 20; i++) {
-
-            linkedList.add(new Random().nextInt(50));
-
+            doublyLinkedList.add(new Random().nextInt(50));
         }
-        System.out.println(linkedList);
+        System.out.println(doublyLinkedList);
 
-        //quiero ver la data de ult nodo de la lista
-        System.out.println("getHead " + linkedList.getHead().data);
-        System.out.println("getTail " + linkedList.getTail().data);
+        //quiero ver la data del primero y ult nodo de la lista
+        System.out.println("_".repeat(50));
+        System.out.println("getHead: " + doublyLinkedList.getHead().data);
+        System.out.println("getTail: " + doublyLinkedList.getTail().data);
 
-        //Agregar en el primero
-        System.out.println("------------------------");
-        System.out.println("addFirst " );
-        linkedList.addFirst(100);
-        System.out.println(linkedList);
-        System.out.println("addFirst ");
-        linkedList.addFirst(200);
-        System.out.println(linkedList);
-
-        //Size
-        System.out.println("------------------------");
+        System.out.println("addFirst(100)"); doublyLinkedList.addFirst(100);
+        System.out.println("addFirst(200)"); doublyLinkedList.addFirst(200);
+        System.out.println(doublyLinkedList);
         try {
-            System.out.println("LinkedList size: " + linkedList.size());
+            System.out.println("Linklist size: "+doublyLinkedList.size());
 
-            //Buscar elemento e index Of
-            System.out.println("------------------------");
-            for(int i = 0; i < 10; i++){
+            //probamos contains
+            System.out.println("_".repeat(50));
+            for (int i=0; i<10;i++) {
                 int value = new Random().nextInt(50);
-                System.out.println(linkedList.contains(value) ? "value [ " + value + " ] exists. Position:  "
-                        + linkedList.indexOf(value)
-                        : "value " + value +  " not found");
+                System.out.println(
+                        doublyLinkedList.contains(value)
+                                ? "value [" + value + "] exists. Position: "
+                                + doublyLinkedList.indexOf(value)
+                                : "value [" + value + "] does not exist"
+                );
             }
 
+            //Probamos removeFirst, removeLast
+            System.out.println("\nremoveFirst: " + doublyLinkedList.removeFirst());
+            System.out.println("removeLast: " + doublyLinkedList.removeLast());
+            System.out.println("removeLast: " + doublyLinkedList.removeLast());
 
-            System.out.println("------------------------");
-            System.out.println("Linked list getFirst " + linkedList.getFirst());
-            System.out.println("Linked list getLast " + linkedList.getLast());
-            System.out.println("------------------------");
-
-
-            //Remove
-
-            //Eliminar el primero
-            //Eliminar el ultimo
-            System.out.println("removeFirst: "+  linkedList.removeFirst());
-            System.out.println("removeLast: "+  linkedList.removeLast());
-            System.out.println("removeLast: "+  linkedList.removeLast());
-            linkedList.remove(100);
-            System.out.println("remove: 100");
-            System.out.println("------------------------");
-            System.out.println(linkedList);
-
-            /*c. Realice una búsqueda en la lista de 20 valores aleatorios. Si encuentra el
-        valor deberá mostrar su posición en la lista, el elemento anterior y el
-        elemento posterior.*/
-
-            //Probamos Get
-            int n =  linkedList.size();
-            for (int i = 1; i<n; i++) {
-
-                System.out.println("get ( " + i + " ) = " + linkedList.get(i) +
-                        " | getPrev (" + linkedList.get(i) + ") = " + linkedList.getPrev(linkedList.get(i)) +
-                        " | getNext (" + linkedList.get(i) + ") = " + linkedList.getNext(linkedList.get(i)));
+            //probamos get
+            System.out.println("_".repeat(50));
+            int n =  doublyLinkedList.size();
+            for (int i = 1; i <= n; i++) {
+                System.out.println("get(" + i + ") = " + doublyLinkedList.get(i));
             }
 
-            //Ordernar
+            System.out.println("_".repeat(50));
+            System.out.println(doublyLinkedList);
+            for (int i = 1; i <= n; i++) {
+                System.out.println(
+                        "get(" + i + ") = " + doublyLinkedList.get(i)
+                                + ", getPrev(" + doublyLinkedList.get(i) + ") = "
+                                + doublyLinkedList.getPrev(doublyLinkedList.get(i))
+                                + ", getNext(" + doublyLinkedList.get(i) + ") = "
+                                + doublyLinkedList.getNext(doublyLinkedList.get(i))
+                );
+            }
 
-            //getPrev
-            //getNext
+            //al final volvemos a mostrar la lista
+            System.out.println("_".repeat(50));
+            System.out.println(doublyLinkedList);
 
+            //probamos los removes
+            for (int i = 0; i < 20; i++) {
+                int value =  new Random().nextInt(50);
+                if(doublyLinkedList.contains(value)) {
+                    System.out.println("remove("+value+") deleted !!!");
+                    doublyLinkedList.remove(value);
+                }
+            }
+            //al final volvemos a mostrar la lista
+            System.out.println(doublyLinkedList);
+
+            //probamos los removeFirst, removeLast
+            System.out.println("_".repeat(50));
+            for (int i = 0; i < 20; i++) {
+                int value =  new Random().nextInt(50);
+                if(doublyLinkedList.contains(value)) {
+                    System.out.println("removeFirst(): "+doublyLinkedList.removeFirst());
+                    System.out.println("removeLast(): "+doublyLinkedList.removeLast());
+                    System.out.println(doublyLinkedList);
+                }
+            }
+            //al final volvemos a mostrar la lista
+            System.out.println(doublyLinkedList);
 
         } catch (ListException e) {
             throw new RuntimeException(e);
         }
-
     }
-
-
-    
-
 
 }
