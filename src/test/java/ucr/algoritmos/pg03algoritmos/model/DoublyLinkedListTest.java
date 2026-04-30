@@ -7,10 +7,22 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DoublyLinkedListTest {
+    @Test
+    void add() throws ListException {
+        //a. Agregue 50 valores numéricos no repetidos a la lista y muestre la lista por consola
+        DoublyLinkedList<Integer> listNumbers = new DoublyLinkedList<>();
+        for (int i = 0; i < 50; i++) {
+            listNumbers.add(i);
+        }
+        System.out.println(listNumbers);
+        //b. Pruebe los métodos: getFirst y getLast
+        System.out.println( "getFirst("+listNumbers.getFirst() + ")");
+        System.out.println( "getLast("+listNumbers.getLast() + ")");
+
+    }
 
     @Test
     void DoublyLinkedListTest() {
-
         DoublyLinkedList<Integer> linkedList = new DoublyLinkedList<>();
         linkedList.add(20);
         linkedList.add(10);
@@ -63,8 +75,14 @@ class DoublyLinkedListTest {
             System.out.println("removeFirst: "+  linkedList.removeFirst());
             System.out.println("removeLast: "+  linkedList.removeLast());
             System.out.println("removeLast: "+  linkedList.removeLast());
+            linkedList.remove(100);
+            System.out.println("remove: 100");
             System.out.println("------------------------");
             System.out.println(linkedList);
+
+            /*c. Realice una búsqueda en la lista de 20 valores aleatorios. Si encuentra el
+        valor deberá mostrar su posición en la lista, el elemento anterior y el
+        elemento posterior.*/
 
             //Probamos Get
             int n =  linkedList.size();
