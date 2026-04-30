@@ -122,8 +122,6 @@ public class LinkedList<T> implements List<T> {
                     //Desenlazo el nodo
                     prev.next = removed.next;//Se brinca el nodo a suprimir
 
-                    return;
-
                 }
 
                 prev = prev.next;

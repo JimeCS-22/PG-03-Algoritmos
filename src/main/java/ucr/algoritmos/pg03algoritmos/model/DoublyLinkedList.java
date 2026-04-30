@@ -42,19 +42,22 @@ public class DoublyLinkedList<T> implements List<T>{
     @Override
     public void add(T element) {
         Node<T> node = new Node<>(element);
+         if (head == null) {
+             head = node;
+             tail = node;
+         }else {//Significa que head apunta a un nodo existente
 
-        if (isEmpty()) head = node;
-        else {
+             Node<T> aux = head;
+             //me muevo por la derecha hasta alcanzar el ultimo elemento
+             while (aux.next != null) {
+                 aux = aux.getNext();
+             }
 
-            Node<T> aux = head;// aux para moverme por la lista y no perder el puntero de inicio
-            while (aux.next != null) {
-                aux = aux.next;// mueve aux al nodo siguiente
-            }
-            //Se sale del while cuando aux esta en el ultimo nodo
-            aux.next = node;
-            //hago el doble enlace
-            node.prev = aux;
-        }
+             //Cuando se sale de while aux.next == null
+             aux.next = node;
+             // Hacemos el doble enlace
+             node.prev = aux;
+         }
 
     }
 
@@ -62,14 +65,10 @@ public class DoublyLinkedList<T> implements List<T>{
     public void addFirst(T element) {
 
         Node<T> node = new Node<>(element);
-
-        if (isEmpty()) head = node;
-        else {
-            node.next = head;
-            //Hago el doble enlace
-            head.prev = node;
-            head = node;
-        }
+        node.next = head;
+        //hacemos el doble enlace
+        head.prev = node;
+        head = node;//pq el nuevo nodo quede de primero
 
     }
 
@@ -120,67 +119,76 @@ public class DoublyLinkedList<T> implements List<T>{
         //Caso 1: EL elemento a suprimir es el primero de la lista
         if (equals(head.data, element)) {
             head = head.next;
-            head.prev = null;//actualizo el enlace al nodo anterior
-        }
 
-        //Caso 2: El elemnto puede estar en el medio o al final
+            if (head != null) {
+                head.prev = null;//para que no quede apuntando al nodo suprimido
+            }
+        }
         else {
+                Node<T> prev = head;
+                while (prev != null && !(equals(prev.data, element))) {
 
-            Node<T> prev = head;// nodo anterior
-            Node<T> aux = head.next;//nodo siguiente
+                    if (equals(prev.next.data, element)) {
 
-            while(aux != null && !equals(aux.data, element)) {
-                prev = aux;
-                aux = aux.next;
-            }
+                        //Ya encontre el elemnto a eliminar
+                        Node<T> removed = prev.next;
 
-            //Se sale del while cuando alcanza nulo o cuando se encuentra el elemento
-            if (aux!= null && equals(aux.data, element)) {
-                //Se debe de desenlazar el nodo
-                prev.next = aux.next;
-                //mantego el doble enlace
-                if(aux.next != null) aux.next.prev = prev;
+                        //Desenlazo el nodo
+                        prev.next = removed.next;//Se brinca el nodo a suprimir
+
+                        //dejamos el doble enlace
+                        if (removed.next != null) {
+                            removed.next.prev = prev;
+                        }
+
+                    }
+
+                    prev = prev.next;
+
+                }
+                //Al final dejamos tail en el ultimo nodo
+                //  Si la lista queda vacia, se asigna nulo
+                tail = head != null ? getNodeByIndex(indexOf(getLast())) : null;
+
+
             }
         }
 
 
-    }
+
 
     @Override
     public T removeFirst() throws ListException {
         if (isEmpty()) throw new ListException("Doubly Linked List is empty");
 
-        T value = head.data;
-        head = head.next;//se mueve el apuntador al nodo siguiente
-
-        //Se rompe el doble enlace
-        if(head != null) head.prev = null;
-
-        return value;
-
+        T first = head.data;
+        head = head.next;
+        if (head != null) {
+            tail = null;
+        }
+        return first;
     }
+
+
 
     @Override
     public T removeLast() throws ListException {
-        if (isEmpty()) throw new ListException("Doubly Linked List is empty");
-
-        if(head.next == null){
-            //Solo un nodo
-            T value = head.data;
-            head = null;
-            return value;
-        }
+        if (isEmpty())
+            throw new ListException("Doubly Linked List is empty");
 
         Node<T> aux = head;
-
-        while(aux.next != null){
+        Node<T> prev = head;
+        while (aux.next != null) {
+            prev = aux;//dejamos un rastro en el modo auxiliar
             aux = aux.next;
         }
-
-        T  value = aux.data;
-        aux.prev.next = null;//romper el enlace
-
-        return value;
+        //Se sale del while cuando aux esta en el ultimo nodo
+        T last = aux.data;//la data del nodo
+        prev.next = null;//Para desconectar el ult nodo
+        tail = prev;//para que tail quede apuntando al ult nodo
+        //Validacion si solo queda un nodo
+        if (prev == aux) clear();//anulamos la lista
+        return last;
     }
 
     @Override
@@ -341,6 +349,19 @@ public class DoublyLinkedList<T> implements List<T>{
             if (count == index) return aux;
             count++;
             aux = aux.next;
+        }
+        return null;
+    }
+
+    private Node<T> getNodeByIndex(int index) throws ListException {
+        if (isEmpty())
+            throw new ListException("Linked List is empty");
+        Node<T> aux = head;
+        int pos = 1;//la posicion del primer nodo
+        while (aux != null) {
+            if (pos == index) return aux;
+            aux = aux.next;
+            pos++;
         }
         return null;
     }
