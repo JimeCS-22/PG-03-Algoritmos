@@ -125,6 +125,8 @@ public class LinkedList<T> implements List<T> {
                 }
 
                 prev = prev.next;
+                if (prev == null) break;
+
 
             }
 

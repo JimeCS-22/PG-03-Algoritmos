@@ -157,6 +157,8 @@ public class DoublyLinkedList<T> implements List<T>{
 
                     prev = prev.next;
 
+                    if (prev == null) break;
+
                 }
                 //Al final dejamos tail en el ultimo nodo
                 //  Si la lista queda vacia, se asigna nulo
