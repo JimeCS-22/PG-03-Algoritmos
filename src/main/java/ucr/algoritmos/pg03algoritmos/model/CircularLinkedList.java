@@ -33,13 +33,13 @@ public class CircularLinkedList<T> implements List<T> {
             counter++;
             aux = aux.next;
         }
-        return counter+1;//para que cuente el último nodo
+        return counter+1; //para que cuente el ultimo nodo
     }
 
     @Override
     public void clear() {
         this.head = null;
-        this.tail = null;
+        this.tail = null; // Es recomendable limpiar tail también
     }
 
     @Override
@@ -53,21 +53,21 @@ public class CircularLinkedList<T> implements List<T> {
         if (head == null) {
             head = node;
             tail = node;
-        } else {//Significa que head apunta a un nodo existente
+        } else {
             tail.next = node;
-            tail = node;//dejo tail en el ult nodo
+            tail = node; //Dejo tail en el ultimo nodo
         }
-
-        tail.next = head;//Hago el enlace
+        //Hago el enlace circular
+        tail.next = head;
     }
 
     @Override
     public void addFirst(T element) {
         Node<T> node = new Node<>(element);
         node.next = head;
-        head = node;
+        head = node; //Porque el nuevo queda  de primero
         //Hago el enlace circular
-        tail.next = node;
+        tail.next = head;
     }
 
     @Override
@@ -105,7 +105,7 @@ public class CircularLinkedList<T> implements List<T> {
     @Override
     public void remove(T element) throws ListException {
         if (isEmpty())
-            throw new ListException("Circular Linked List is empty");
+            throw new ListException("Circular Circular Linked List is empty");
 
         // Caso 1: Cuando el elemento a suprimir es el primero en la listaq
         if (equals(head.data, element)) {
@@ -129,15 +129,13 @@ public class CircularLinkedList<T> implements List<T> {
                 prev = prev.next;
                 if (prev == null) break;
 
-
             }
-            //se sale cuando tail esta en el ultimo nodo
-            //q pasa solo cuando queda un nodo y lo quiero eliminar
-            if (head == tail && equals(tail.data, element)) {
-                clear();//anulo la lista
-                return;
+            //Se sale del while cuando tail está en el último nodo
+            //Que pasa solo si queda en un nodo y es el que quiero eliminar
+            if(head == tail && equals(tail.data, element)){
+                clear(); //Anulo la lista
+                return; //Se sale del metodo
             }
-
 
             //Al final dejamos tail en el ultimo nodo
             //  Si la lista queda vacia, se asigna nulo
@@ -150,12 +148,12 @@ public class CircularLinkedList<T> implements List<T> {
     @Override
     public T removeFirst() throws ListException {
         if (isEmpty())
-            throw new ListException("Circular Linked List is empty");
+            throw new ListException("Circular Circular Linked List is empty");
         T first = head.data;
         head = head.next;
-        //q pasa solo cuando queda un nodo
-        if (head == tail) {
-            clear();//anulo la lista
+        //Que pasa solo si queda en un nodo y es el que quiero eliminar
+        if(head == tail){
+            clear(); //Anulo la lista
         } else
             //Hago el enlace circular
             tail.next = head;
@@ -169,20 +167,20 @@ public class CircularLinkedList<T> implements List<T> {
 
         Node<T> aux = head;
         Node<T> prev = head;
-        while (aux != tail) {
+        while (aux.next != tail) {
             prev = aux;//dejamos un rastro en el modo auxiliar
             aux = aux.next;
         }
         //Se sale del while cuando aux esta en el ultimo nodo
         T last = aux.data;//la data del nodo
-        prev.next = head;//lo enlazamos con el primer nodo
+        prev.next = head; //Lo enlazamos con el primer nodo
         tail = prev;//para que tail quede apuntando al ult nodo
 
         //Validacion si solo queda un nodo
         if (head == tail) clear();//anulamos la lista
 
-        //Hago el enlace circular
-        if (tail != null){
+        //Hacemos el enlace circular
+        if(tail != null){
             tail.next = head;
         }
         return last;
@@ -193,12 +191,10 @@ public class CircularLinkedList<T> implements List<T> {
         if (isEmpty())
             throw new ListException("Circular Linked List is empty");
         Node<T> aux = head;
-        while (aux != null) {
+        while (aux != tail) {
             if (equals(aux.data, element)) return true;
             aux = aux.next;
         }
-        //se sale cuando estamos en el ult nodo
-        //solo queda validar la data del ult nodo
         return equals(tail.data, element);
     }
 
@@ -231,7 +227,7 @@ public class CircularLinkedList<T> implements List<T> {
             index++;
             aux = aux.next;
         }
-        return equals(aux.data, element) ? index :-1;
+        return equals(aux.data, element) ? index : -1;
     }
 
     @Override
@@ -253,16 +249,14 @@ public class CircularLinkedList<T> implements List<T> {
         if (isEmpty())
             throw new ListException("Circular Linked List is empty");
 
-        if (equals(head.data, element)) return null;
-
         Node<T> aux = head;
+        Node<T> prev = null;
 
-
+        if(equals(head.data, element)) return tail.data;
         while (aux != tail) {
-            if (equals(aux.data, element)) return (aux.data);
+            if (equals(aux.next.data, element)) return aux.data;
             aux = aux.next;
         }
-
         return null;
     }
 
@@ -274,12 +268,11 @@ public class CircularLinkedList<T> implements List<T> {
         Node<T> aux = head;
         while (aux != tail) {
             if (equals(aux.data, element)) {
-                return  aux.next.data;
+                return aux.next.data;
             }
             aux = aux.next;
         }
-
-        //Se sale del while cuando estamos en el ult nodo
+        //Se sale del While cuando estamos en el ultimo nodo
         return equals(tail.data, element) ? tail.data : null;
     }
 
@@ -289,16 +282,17 @@ public class CircularLinkedList<T> implements List<T> {
             throw new ListException("Circular Linked List is empty");
         if (index < 1 || index > size())
             throw new ListException("Index out of bounds");
+
         Node<T> aux = head;
         int count = 1;
-        while (aux != null) {
-            if (count == index) {
+        while (aux != tail) {
+            if (count++ == index) {
                 return aux.data;
             }
-            count++;
             aux = aux.next;
         }
-        return null; // Nunca debería llegar aquí por el control anterior
+        //Se sale del while cuando aux está em eñ último nodo
+        return count==index ? tail.data : null;
     }
 
     @Override
@@ -306,12 +300,15 @@ public class CircularLinkedList<T> implements List<T> {
         StringBuilder sb = new StringBuilder("HEAD →");//➡️
         Node<T> aux = head;
 
-        while (aux != null) {
+        while (aux != tail) {
             sb.append("[").append(aux.data).append("]");
             if (aux.next != null) sb.append("→");
             aux = aux.next;
         }
-        sb.append("→ NULL ");
+        //Falta agregar la info del ultimo nodo
+        if(tail!=null) //Para evitar el NullPointException
+            sb.append("[").append(tail.data).append("]");
+        sb.append("→ HEAD "); //Que apunte a nulo
         return sb.toString();
     }
 
