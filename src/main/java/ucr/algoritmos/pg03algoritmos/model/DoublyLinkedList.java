@@ -5,10 +5,22 @@ public class DoublyLinkedList<T> implements List<T>{
     private Node<T> head;//Inicio de la lista
     private Node<T> tail;//Final de la lista
 
+    public DoublyLinkedList() {
+    }
+
     //Constructor
     public DoublyLinkedList(Node<T> head,  Node<T> tail) {
         this.head = head;
         this.tail = tail;
+    }
+
+
+    public Node<T> getHead() {
+        return head;
+    }
+
+    public Node<T> getTail() {
+        return tail;
     }
 
     @Override
@@ -29,9 +41,8 @@ public class DoublyLinkedList<T> implements List<T>{
 
     @Override
     public void clear() {
-
-        this.head = null;
-
+        head = null;
+        tail = null;
     }
 
     @Override
@@ -57,6 +68,7 @@ public class DoublyLinkedList<T> implements List<T>{
              aux.next = node;
              // Hacemos el doble enlace
              node.prev = aux;
+             tail = node;
          }
 
     }
@@ -163,9 +175,13 @@ public class DoublyLinkedList<T> implements List<T>{
 
         T first = head.data;
         head = head.next;
+
         if (head != null) {
-            tail = null;
+            head.prev = null;
+        } else {
+            tail = null; // solo si la lista quedó vacía
         }
+
         return first;
     }
 
@@ -259,16 +275,8 @@ public class DoublyLinkedList<T> implements List<T>{
 
     @Override
     public T getLast() throws ListException {
-
         if (isEmpty()) throw new ListException("Doubly Linked List is empty");
-
-        Node<T> aux = head;
-
-        while (aux != null) {
-            aux = aux.next;
-        }
-
-        return aux.data;
+        return tail.data;
     }
 
     @Override
@@ -282,6 +290,8 @@ public class DoublyLinkedList<T> implements List<T>{
             if (equals(aux.data, element)) {
                 return (aux.prev != null) ? aux.prev.data : null;
             }
+
+            aux = aux.next;
         }
 
         return null;
