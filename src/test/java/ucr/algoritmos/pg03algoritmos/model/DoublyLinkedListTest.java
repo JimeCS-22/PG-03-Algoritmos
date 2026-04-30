@@ -11,48 +11,48 @@ class DoublyLinkedListTest {
     @Test
     void DoublyLinkedListTest() {
 
-        DoublyLinkedList<Integer> linkedList = new DoublyLinkedList<>();
-        linkedList.add(20);
-        linkedList.add(10);
+        DoublyLinkedList<Integer> doublyLinkedList = new DoublyLinkedList<>();
+        doublyLinkedList.add(20);
+        doublyLinkedList.add(10);
 
         for (int i = 0; i < 20; i++) {
 
-            linkedList.add(new Random().nextInt(50));
+            doublyLinkedList.add(new Random().nextInt(50));
 
         }
-        System.out.println(linkedList);
+        System.out.println(doublyLinkedList);
 
         //quiero ver la data de ult nodo de la lista
-        System.out.println("getHead " + linkedList.getHead().data);
-        System.out.println("getTail " + linkedList.getTail().data);
+        System.out.println("getHead " + doublyLinkedList.getHead().data);
+        System.out.println("getTail " + doublyLinkedList.getTail().data);
 
         //Agregar en el primero
         System.out.println("------------------------");
         System.out.println("addFirst " );
-        linkedList.addFirst(100);
-        System.out.println(linkedList);
+        doublyLinkedList.addFirst(100);
+        System.out.println(doublyLinkedList);
         System.out.println("addFirst ");
-        linkedList.addFirst(200);
-        System.out.println(linkedList);
+        doublyLinkedList.addFirst(200);
+        System.out.println(doublyLinkedList);
 
         //Size
         System.out.println("------------------------");
         try {
-            System.out.println("LinkedList size: " + linkedList.size());
+            System.out.println("DoublyLinkedList size: " + doublyLinkedList.size());
 
             //Buscar elemento e index Of
             System.out.println("------------------------");
             for(int i = 0; i < 10; i++){
                 int value = new Random().nextInt(50);
-                System.out.println(linkedList.contains(value) ? "value [ " + value + " ] exists. Position:  "
-                        + linkedList.indexOf(value)
+                System.out.println(doublyLinkedList.contains(value) ? "value [ " + value + " ] exists. Position:  "
+                        + doublyLinkedList.indexOf(value)
                         : "value " + value +  " not found");
             }
 
 
             System.out.println("------------------------");
-            System.out.println("Linked list getFirst " + linkedList.getFirst());
-            System.out.println("Linked list getLast " + linkedList.getLast());
+            System.out.println("Doubly Linked list getFirst " + doublyLinkedList.getFirst());
+            System.out.println("Doubly Linked list getLast " + doublyLinkedList.getLast());
             System.out.println("------------------------");
 
 
@@ -60,19 +60,20 @@ class DoublyLinkedListTest {
 
             //Eliminar el primero
             //Eliminar el ultimo
-            System.out.println("removeFirst: "+  linkedList.removeFirst());
-            System.out.println("removeLast: "+  linkedList.removeLast());
-            System.out.println("removeLast: "+  linkedList.removeLast());
+            System.out.println("removeFirst: "+  doublyLinkedList.removeFirst());
+            System.out.println("removeLast: "+  doublyLinkedList.removeLast());
+            System.out.println("removeLast: "+  doublyLinkedList.removeLast());
             System.out.println("------------------------");
-            System.out.println(linkedList);
+            System.out.println(doublyLinkedList);
+
 
             //Probamos Get
-            int n =  linkedList.size();
+            int n =  doublyLinkedList.size();
             for (int i = 1; i<n; i++) {
 
-                System.out.println("get ( " + i + " ) = " + linkedList.get(i) +
-                        " | getPrev (" + linkedList.get(i) + ") = " + linkedList.getPrev(linkedList.get(i)) +
-                        " | getNext (" + linkedList.get(i) + ") = " + linkedList.getNext(linkedList.get(i)));
+                System.out.println("get ( " + i + " ) = " + doublyLinkedList.get(i) +
+                        " | getPrev (" + doublyLinkedList.get(i) + ") = " + doublyLinkedList.getPrev(doublyLinkedList.get(i)) +
+                        " | getNext (" + doublyLinkedList.get(i) + ") = " + doublyLinkedList.getNext(doublyLinkedList.get(i)));
             }
 
             //Ordernar
