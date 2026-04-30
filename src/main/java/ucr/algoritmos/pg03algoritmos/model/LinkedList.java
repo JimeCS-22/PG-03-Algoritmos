@@ -132,7 +132,7 @@ public class LinkedList<T> implements List<T> {
 
             //Al final dejamos tail en el ultimo nodo
             //  Si la lista queda vacia, se asigna nulo
-            tail = head != null ? getNodeByIndex(indexOf(getLast())) : null;
+            tail = tail != null ? getNodeByIndex(indexOf(getLast())) : null;
 
 
         }
