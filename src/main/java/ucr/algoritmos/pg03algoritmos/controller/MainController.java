@@ -16,6 +16,8 @@ import ucr.algoritmos.pg03algoritmos.util.BigIntegerSpinnerValueFactory;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class MainController {
 
@@ -93,8 +95,6 @@ public class MainController {
     @FXML
     private Canvas canvasListDoubly;
     @FXML
-    private Label txFieldNodeRepreDoubly;
-    @FXML
     private TableColumn colPositionDoubly;
     @FXML
     private Button btnEliminarInicio;
@@ -135,12 +135,21 @@ public class MainController {
     @FXML
     private Button btnSiguiente;
 
+    // DoublyLinkedList: estado
+    private DoublyLinkedList<Employee> doublyList = new DoublyLinkedList<>();
+    private final ObservableList<Employee> doublyData = FXCollections.observableArrayList();
+    private Node<Employee> currentEmployeeNode = null;
+    private final DateTimeFormatter hireFmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    @FXML
+    private TextArea txAreaNodeRepreDoubly;
+
 
     @FXML
     public void initialize() {
         setupMillerRabin();
         setupLinkedListTab();
         setupRandomSearch();
+        setupDoublyLinkedListTab();
     }
 
     private void setupMillerRabin() {
@@ -543,12 +552,9 @@ public class MainController {
     }
 
 
-    // =======================
-// TAB: Random Search
-// =======================
 
+    // TAB: Random Search
     private static final int VISIBLE = 12;
-
     private void setupRandomSearch() {
 
         sliderParaSearch.setMin(0);
@@ -746,6 +752,338 @@ public class MainController {
         }
         sb.append(", ...]");
         return sb.toString();
+    }
+
+
+
+    // TAB: Doubly Linked List
+
+    private void setupDoublyLinkedListTab() {
+
+        // ChoiceBox puestos (como en imagen 2)
+        bxJobPosition.setItems(FXCollections.observableArrayList(
+                "Informático/a", "Doctor/a", "Docente", "Administrador/a",
+                "Periodista", "Arquitecto/a"
+        ));
+        bxJobPosition.getSelectionModel().selectFirst();
+
+        dpHireDate.setValue(LocalDate.now());
+
+
+        colPositionDoubly.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colPuesto.setCellValueFactory(new PropertyValueFactory<>("jobPosition"));
+        colFechaIngreso.setCellValueFactory(new PropertyValueFactory<>("hireDate"));
+
+        colID.setItems(doublyData);
+
+        // Botones
+        btnAgregarDoble.setOnAction(e -> addEmployeeDoubly());
+        btnSearchDoble.setOnAction(e -> searchEmployeeDoubly());
+        btnClearListDoble.setOnAction(e -> clearDoublyTab());
+
+        btnPrimero.setOnAction(e -> goFirstEmployee());
+        btnUltimo.setOnAction(e -> goLastEmployee());
+        btnAnterior.setOnAction(e -> goPrevEmployee());
+        btnSiguiente.setOnAction(e -> goNextEmployee());
+
+        btnEliminarInicio.setOnAction(e -> removeFirstEmployee());
+        btnEliminarFinal.setOnAction(e -> removeLastEmployee());
+        btnEliminarDoble.setOnAction(e -> removeEmployeeById());
+
+    }
+
+    private void addEmployeeDoubly() {
+        String id = txtId.getText() == null ? "" : txtId.getText().trim();
+        String name = txtName.getText() == null ? "" : txtName.getText().trim();
+        String job = (String) bxJobPosition.getValue();
+        LocalDate hire = dpHireDate.getValue();
+
+        if (id.isBlank() || name.isBlank() || job == null || hire == null) {
+            showAlert("Error", "Debe completar: Id, Name, Job Position y Hire date.");
+            return;
+        }
+
+        // Solo letras y espacios
+        if (!name.matches("[\\p{L} ]+")) {
+            showAlert("Error", "El nombre solo puede contener letras y espacios.");
+            txtName.requestFocus();
+            return;
+        }
+
+        // El ID solo puede tener números
+        if (!id.matches("\\d+")) {
+            showAlert("Error", "El ID solo puede contener números.");
+            txtName.requestFocus();
+            return;
+        }
+
+        // Que el ID no exista ya en la lista
+        if (existsEmployeeId(id)) {
+            showAlert("Error", "Ya existe un empleado con Id: " + id);
+            return;
+        }
+
+        Employee emp = new Employee(name, id, 0, 0.0, 0.0, job, hire);
+        doublyList.add(emp);
+        doublyData.add(emp);
+
+        currentEmployeeNode = doublyList.getTail();
+
+        listViewOperationsListDoubly.getItems().add("add(" + id + ") HEAD ↔ [Empleado ID: " + id + "] ↔ ...");
+
+        refreshDoublyUI("Insertado item: " + id);
+
+    }
+
+    private boolean existsEmployeeId(String id) {
+        try {
+            if (doublyList.isEmpty()) return false;
+            Node<Employee> aux = doublyList.getHead();
+            while (aux != null) {
+                if (aux.data != null && id.equals(aux.data.getId())) return true;
+                aux = aux.next;
+            }
+        } catch (Exception ignored) {}
+        return false;
+    }
+
+    private void searchEmployeeDoubly() {
+        String id = txtId.getText() == null ? "" : txtId.getText().trim();
+        if (id.isBlank()) {
+            showAlert("Error", "Digite el Id a buscar.");
+            return;
+        }
+
+        Node<Employee> found = findById(id);
+        if (found == null) {
+            listViewOperationsListDoubly.getItems().add("search(" + id + ") → NO ENCONTRADO");
+            showAlert("Resultado", "No se encontró el empleado con Id: " + id);
+            return;
+        }
+
+        currentEmployeeNode = found;
+        listViewOperationsListDoubly.getItems().add("search(" + id + ") → ENCONTRADO");
+        refreshDoublyUI("Encontrado: " + id);
+        selectEmployeeInTable(found.data);
+    }
+
+    private Node<Employee> findById(String id) {
+        try {
+            if (doublyList.isEmpty()) return null;
+            Node<Employee> aux = doublyList.getHead();
+            while (aux != null) {
+                if (aux.data != null && id.equals(aux.data.getId())) return aux;
+                aux = aux.next;
+            }
+        } catch (Exception ignored) {}
+        return null;
+    }
+
+    private void goFirstEmployee() {
+        if (doublyList.isEmpty()) { showAlert("Info", "Lista vacía"); return; }
+        currentEmployeeNode = doublyList.getHead();
+        refreshDoublyUI("Primero");
+        selectEmployeeInTable(currentEmployeeNode.data);
+    }
+
+    private void goLastEmployee() {
+        if (doublyList.isEmpty()) { showAlert("Info", "Lista vacía"); return; }
+        currentEmployeeNode = doublyList.getTail();
+        refreshDoublyUI("Último");
+        selectEmployeeInTable(currentEmployeeNode.data);
+    }
+
+    private void goPrevEmployee() {
+        if (currentEmployeeNode == null) { showAlert("Info", "No hay selección"); return; }
+        if (currentEmployeeNode.prev == null) { showAlert("Info", "Ya está en el primero"); return; }
+        currentEmployeeNode = currentEmployeeNode.prev;
+        refreshDoublyUI("Anterior");
+        selectEmployeeInTable(currentEmployeeNode.data);
+    }
+
+    private void goNextEmployee() {
+        if (currentEmployeeNode == null) { showAlert("Info", "No hay selección"); return; }
+        if (currentEmployeeNode.next == null) { showAlert("Info", "Ya está en el último"); return; }
+        currentEmployeeNode = currentEmployeeNode.next;
+        refreshDoublyUI("Siguiente");
+        selectEmployeeInTable(currentEmployeeNode.data);
+    }
+
+    private void removeFirstEmployee() {
+        try {
+            Employee removed = doublyList.removeFirst();
+            doublyData.remove(removed);
+            listViewOperationsListDoubly.getItems().add("removeFirst() → eliminado ID: " + removed.getId());
+
+            currentEmployeeNode = doublyList.isEmpty() ? null : doublyList.getHead();
+            refreshDoublyUI("Eliminado inicio");
+        } catch (ListException e) {
+            showAlert("Error", e.getMessage());
+        }
+    }
+
+    private void removeLastEmployee() {
+        try {
+            Employee removed = doublyList.removeLast();
+            doublyData.remove(removed);
+            listViewOperationsListDoubly.getItems().add("removeLast() → eliminado ID: " + removed.getId());
+
+            currentEmployeeNode = doublyList.isEmpty() ? null : doublyList.getTail();
+            refreshDoublyUI("Eliminado final");
+        } catch (ListException e) {
+            showAlert("Error", e.getMessage());
+        }
+    }
+
+    private void removeEmployeeById() {
+        String id = txtId.getText() == null ? "" : txtId.getText().trim();
+        if (id.isBlank()) {
+            showAlert("Error", "Digite el Id a eliminar.");
+            return;
+        }
+
+        Node<Employee> found = findById(id);
+        if (found == null) {
+            showAlert("Resultado", "No existe el Id: " + id);
+            return;
+        }
+
+        try {
+            doublyList.remove(found.data);
+            doublyData.remove(found.data);
+            listViewOperationsListDoubly.getItems().add("remove(" + id + ") → eliminado");
+
+            currentEmployeeNode = doublyList.isEmpty() ? null : doublyList.getHead();
+            refreshDoublyUI("Eliminado: " + id);
+        } catch (ListException e) {
+            showAlert("Error", e.getMessage());
+        }
+    }
+
+    private void clearDoublyTab() {
+        doublyList.clear();
+        doublyData.clear();
+        currentEmployeeNode = null;
+
+        txtId.clear();
+        txtName.clear();
+        dpHireDate.setValue(LocalDate.now());
+        bxJobPosition.getSelectionModel().selectFirst();
+
+        listViewOperationsListDoubly.getItems().clear();
+        txAreaNodeRepreDoubly.setText("");
+        txtInsertadoIn1.setText("");
+
+        clearCanvasDoubly();
+    }
+
+    private void refreshDoublyUI(String status) {
+        // Representación
+        txAreaNodeRepreDoubly.setText(doublyList.toString());
+
+        // Insertad
+        txtInsertadoIn1.setText(status);
+
+        // dibujar
+        drawDoublyList();
+    }
+
+    private void selectEmployeeInTable(Employee emp) {
+        if (emp == null) return;
+        colID.getSelectionModel().select(emp);
+        colID.scrollTo(emp);
+    }
+
+    private void clearCanvasDoubly() {
+        GraphicsContext gc = canvasListDoubly.getGraphicsContext2D();
+        gc.clearRect(0, 0, canvasListDoubly.getWidth(), canvasListDoubly.getHeight());
+    }
+
+    private void drawDoublyList() {
+        GraphicsContext gc = canvasListDoubly.getGraphicsContext2D();
+        gc.setFill(Color.web("#f2f2f2"));
+        gc.fillRect(0, 0, canvasListDoubly.getWidth(), canvasListDoubly.getHeight());
+
+        if (doublyList.isEmpty()) return;
+
+        double startX = 60;
+        double y = canvasListDoubly.getHeight() / 2.0;
+        double nodeW = 90;
+        double nodeH = 55;
+        double gap = 40;
+
+
+        // HEAD + Flecha hacía el primer nodo
+        gc.setFill(Color.BLACK);
+        gc.setFont(Font.font(14));
+        gc.fillText("HEAD", startX - 50, y + 5);
+
+        {
+            double hx1 = startX - 15;
+            double hx2 = startX;
+            gc.setStroke(Color.web("#f5a623"));
+            gc.setLineWidth(2);
+            gc.strokeLine(hx1, y, hx2, y);
+            // punta de flecha hacia el nodo
+            gc.strokeLine(hx2 - 6, y - 6, hx2, y);
+            gc.strokeLine(hx2 - 6, y + 6, hx2, y);
+        }
+
+        Node<Employee> aux = doublyList.getHead();
+        double x = startX;
+
+        while (aux != null) {
+            boolean highlight = (aux == currentEmployeeNode);
+
+            gc.setFill(highlight ? Color.web("#8ef28e") : Color.web("#1f2a44"));
+            gc.fillRoundRect(x, y - nodeH / 2, nodeW, nodeH, 8, 8);
+
+            gc.setStroke(Color.BLACK);
+            gc.strokeRoundRect(x, y - nodeH / 2, nodeW, nodeH, 8, 8);
+
+            // Representación del ID en el canvas
+            gc.setFill(Color.WHITE);
+            String id = (aux.data != null && aux.data.getId() != null) ? aux.data.getId() : "?";
+            String text = "👤: " + id;
+            gc.fillText(text, x + 10, y + 5);
+
+
+            //Dibujado de flechas
+            if (aux.next != null) {
+                double ax1 = x + nodeW;
+                double ax2 = x + nodeW + gap;
+
+                gc.setStroke(Color.web("#f5a623"));
+                gc.setLineWidth(2);
+
+                gc.strokeLine(ax1, y, ax2, y);
+                gc.strokeLine(ax2 - 6, y - 6, ax2, y);
+                gc.strokeLine(ax2 - 6, y + 6, ax2, y);
+
+                gc.strokeLine(ax2, y + 12, ax1, y + 12);
+                gc.strokeLine(ax1 + 6, y + 12 - 6, ax1, y + 12);
+                gc.strokeLine(ax1 + 6, y + 12 + 6, ax1, y + 12);
+            }
+
+            x += nodeW + gap;
+            aux = aux.next;
+        }
+
+        //NULL + Flecha hacía Null
+        {
+            double lx1 = x - gap;
+            double lx2 = x;
+            gc.setStroke(Color.web("#f5a623"));
+            gc.setLineWidth(2);
+            gc.strokeLine(lx1, y, lx2, y);
+            // punta hacia NULL
+            gc.strokeLine(lx2 - 6, y - 6, lx2, y);
+            gc.strokeLine(lx2 - 6, y + 6, lx2, y);
+        }
+
+        gc.setFill(Color.BLACK);
+        gc.fillText("NULL", x + 10, y + 5);
     }
 
 

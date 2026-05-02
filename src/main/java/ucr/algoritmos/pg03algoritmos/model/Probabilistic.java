@@ -17,11 +17,19 @@ public class Probabilistic {
         int count = 0;
         //Random random = new Random();
 
+        if (arr == null || arr.length == 0 || attempts <= 0) {
+            result[0] = -1;
+            result[1] = 0;
+            return result;
+        }
+
+        Random random = new Random();
+
         while (true) {
-            int index = new Random().nextInt(arr.length-1);
+            int index = random.nextInt(arr.length);
             count++;
             result[0] = index;
-            result[1] = ++count;
+            result[1] = count;
 
             if (arr[index] == value) return result; //Si el indice del array es igual a la variable
 
@@ -32,31 +40,6 @@ public class Probabilistic {
         }
 
     }
-
-//    public int[] randomSearch(int[] arr, int value, int attempts) {
-//        int[] result = new int[2]; // [index, tries]
-//
-//        if (arr == null || arr.length == 0 || attempts <= 0) {
-//            result[0] = -1;
-//            result[1] = 0;
-//            return result;
-//        }
-//
-//        Random random = new Random();
-//
-//        for (int tries = 1; tries <= attempts; tries++) {
-//            int index = random.nextInt(arr.length); // incluye el último índice
-//            if (arr[index] == value) {
-//                result[0] = index;
-//                result[1] = tries;
-//                return result;
-//            }
-//        }
-//
-//        result[0] = -1;
-//        result[1] = attempts;
-//        return result;
-//    }
 
     public String millerRabin(String bigNumber) {
         String result="";

@@ -62,12 +62,7 @@ public abstract class  Person {
 
     @Override
     public String toString() {
-        return "Person {\n" +
-                "  id: '" + id + "',\n" +
-                "  name: '" + name + "',\n" +
-                "  age: '" + age + "',\n" +
-                "  height: '" + height + "',\n" +
-                "  weight: '" + weight + "'\n" +
-                "}";
+        return "id='" + id + "', name='" + name + "', age=" + age +
+                ", height=" + height + ", weight=" + weight;
     }
 }

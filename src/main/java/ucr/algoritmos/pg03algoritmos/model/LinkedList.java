@@ -108,12 +108,13 @@ public class LinkedList<T> implements List<T> {
         // Caso 1: Cuando el elemento a suprimir es el primero en la listaq
         if (equals(head.data, element)) {
             head = head.next;
+            if (head == null) tail = null; // si quedó vacía
+            return;
         }
         //Caso general: El elemento a suprimir puede estar en el medio o al final
         else {
             Node<T> prev = head;
-            while (prev != null && !(equals(prev.data, element))) {
-
+            while (prev != null && prev.next != null) {
                 if (equals(prev.next.data, element)) {
 
                     //Ya encontre el elemnto a eliminar

@@ -75,8 +75,14 @@ public class DoublyLinkedList<T> implements List<T>{
 
     @Override
     public void addFirst(T element) {
-
         Node<T> node = new Node<>(element);
+
+        if (isEmpty()) {          // <-- agregado
+            head = node;
+            tail = node;
+            return;
+        }
+
         node.next = head;
         //hacemos el doble enlace
         head.prev = node;
@@ -96,6 +102,7 @@ public class DoublyLinkedList<T> implements List<T>{
 
         if (isEmpty()) {
             head = node;
+            tail = node;
             return;
         }
 
@@ -121,6 +128,8 @@ public class DoublyLinkedList<T> implements List<T>{
         aux.next = node;
         node.prev = aux;
 
+        if (node.next == null) tail = node;
+
     }
 
     @Override
@@ -134,6 +143,8 @@ public class DoublyLinkedList<T> implements List<T>{
 
             if (head != null) {
                 head.prev = null;//para que no quede apuntando al nodo suprimido
+            } else {
+                tail = null; // si se borra el único nodo
             }
         }
         else {
@@ -151,7 +162,11 @@ public class DoublyLinkedList<T> implements List<T>{
                         //dejamos el doble enlace
                         if (removed.next != null) {
                             removed.next.prev = prev;
+                        } else {
+                            tail = prev;
                         }
+                        break;
+
 
                     }
 
@@ -162,7 +177,7 @@ public class DoublyLinkedList<T> implements List<T>{
                 }
                 //Al final dejamos tail en el ultimo nodo
                 //  Si la lista queda vacia, se asigna nulo
-                tail = tail != null ? getNodeByIndex(indexOf(getLast())) : null;
+                //tail = tail != null ? getNodeByIndex(indexOf(getLast())) : null;
 
 
             }
@@ -324,7 +339,7 @@ public class DoublyLinkedList<T> implements List<T>{
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("HEAD ->\n");
         Node<T> aux = head;
 
         while (aux != null) {
@@ -338,12 +353,13 @@ public class DoublyLinkedList<T> implements List<T>{
 
             sb.append("]");
 
-            if (aux.next != null) sb.append(" ↔ ");
+            if (aux.next != null) sb.append(" ↔ ->\n");
             aux = aux.next;
         }
 
         return sb.toString();
     }
+
 
     /* ---- AYUDAS----- */
     private boolean equals(T a, T b) {

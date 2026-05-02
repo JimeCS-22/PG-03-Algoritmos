@@ -47,10 +47,32 @@ class DoublyLinkedListTest {
                 System.out.println(
                         doublyLinkedList.contains(value)
                                 ? "value [" + value + "] exists. Position: "
-                                + doublyLinkedList.indexOf(value)
+                                  + doublyLinkedList.indexOf(value)
                                 : "value [" + value + "] does not exist"
                 );
             }
+
+            // ========= AGREGADO (punto 4.c de la guía): 20 búsquedas aleatorias + pos/prev/next =========
+            System.out.println("_".repeat(50));
+            System.out.println("20 random searches (show index, prev, next if found):");
+            for (int i = 0; i < 20; i++) {
+                int value = new Random().nextInt(50);
+
+                if (doublyLinkedList.contains(value)) {
+                    int pos = doublyLinkedList.indexOf(value);
+                    Integer prev = doublyLinkedList.getPrev(value);
+                    Integer next = doublyLinkedList.getNext(value);
+
+                    System.out.println(
+                            "value [" + value + "] FOUND. Position: " + pos
+                                    + ", prev: " + (prev != null ? prev : "NULL")
+                                    + ", next: " + (next != null ? next : "NULL")
+                    );
+                } else {
+                    System.out.println("value [" + value + "] NOT FOUND.");
+                }
+            }
+            // ========= FIN AGREGADO =========
 
             //Probamos removeFirst, removeLast
             System.out.println("\nremoveFirst: " + doublyLinkedList.removeFirst());

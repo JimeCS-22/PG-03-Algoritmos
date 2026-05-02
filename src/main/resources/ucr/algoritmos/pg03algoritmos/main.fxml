@@ -314,10 +314,10 @@
                                     <Canvas fx:id="canvasListDoubly" height="300" width="2000" />
                                  </content>
                               </ScrollPane>
-                              <VBox prefHeight="37.0" prefWidth="548.0" styleClass="info-box" stylesheets="@styles.css">
+                              <VBox prefHeight="102.0" prefWidth="548.0" styleClass="info-box" stylesheets="@styles.css">
                                  <children>
                                     <Label styleClass="axis-label" text="Representación:" />
-                                    <Label fx:id="txFieldNodeRepreDoubly" text="..." />
+                                    <TextArea fx:id="txAreaNodeRepreDoubly" prefHeight="84.0" prefWidth="522.0" />
                                  </children>
                               </VBox>
                               <HBox prefHeight="35.0" prefWidth="548.0">
